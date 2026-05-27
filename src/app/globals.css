@@ -1,26 +1,185 @@
 @import "tailwindcss";
 
+@theme {
+  /* LEGAR brand palette */
+  --color-primary: #1b4dff;
+  --color-primary-600: #1741d6;
+  --color-primary-700: #1336ac;
+  --color-accent: #ffd60a;
+  --color-accent-600: #f0c800;
+  --color-ink: #0a0f1f;
+  --color-ink-soft: #1a2138;
+  --color-bg-100: #ffffff;
+  --color-bg-200: #f4f6fb;
+  --color-bg-300: #ebeff8;
+  --color-success: #1fbf6e;
+  --color-warning: #ffb020;
+  --color-danger: #e5484d;
+
+  /* Fonts */
+  --font-manrope: var(--font-manrope-var);
+  --font-inter: var(--font-inter-var);
+  --font-sans: var(--font-inter-var), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-manrope-var), ui-sans-serif, system-ui, sans-serif;
+
+  /* Spacing tokens (Tailwind v4 defaults already 4-based, kept for clarity) */
+  --radius-card: 16px;
+  --radius-button: 8px;
+  --radius-input: 8px;
+
+  /* Shadows */
+  --shadow-card: 0 4px 24px rgba(27, 77, 255, 0.08);
+  --shadow-card-hover: 0 12px 32px rgba(27, 77, 255, 0.12);
+  --shadow-sos: 0 12px 32px rgba(255, 214, 10, 0.45);
+}
+
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0a0f1f;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  border-color: var(--color-bg-300);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "cv11", "ss01", "ss03";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Focus ring — WCAG visible focus */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Skip-link */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 12px;
+  background: var(--color-ink);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  z-index: 100;
+  font-weight: 600;
+}
+.skip-link:focus {
+  left: 12px;
+}
+
+/* Selection */
+::selection {
+  background: var(--color-accent);
+  color: var(--color-ink);
+}
+
+/* Accent underline (Hero) */
+.accent-underline {
+  position: relative;
+  display: inline-block;
+}
+.accent-underline::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 4px;
+  height: 14px;
+  background: var(--color-accent);
+  z-index: -1;
+  border-radius: 2px;
+  transform: skewX(-6deg);
+}
+
+/* Orbit animation (Hero shield) */
+@keyframes orbit-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes shield-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(27, 77, 255, 0));
+  }
+  50% {
+    transform: scale(1.02);
+    filter: drop-shadow(0 8px 24px rgba(27, 77, 255, 0.25));
+  }
+}
+@keyframes sos-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 214, 10, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 16px rgba(255, 214, 10, 0);
+  }
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.orbit-slow {
+  animation: orbit-spin 40s linear infinite;
+  transform-origin: center;
+}
+.orbit-reverse {
+  animation: orbit-spin 60s linear infinite reverse;
+  transform-origin: center;
+}
+.shield-pulse {
+  animation: shield-pulse 3s ease-in-out infinite;
+  transform-origin: center;
+}
+.sos-pulse {
+  animation: sos-pulse 2s ease-out infinite;
+}
+.fade-up {
+  animation: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Container helper */
+.container-legar {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+@media (min-width: 768px) {
+  .container-legar {
+    padding-inline: 24px;
+  }
 }

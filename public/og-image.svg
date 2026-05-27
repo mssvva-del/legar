@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f4f6fb"/>
+    </linearGradient>
+    <radialGradient id="blob" cx="80%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="#1B4DFF" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#1B4DFF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#blob)"/>
+
+  <!-- Logo -->
+  <g transform="translate(80 80)">
+    <text x="0" y="0" font-family="ui-sans-serif, system-ui" font-weight="800" font-size="48" fill="#0A0F1F">LEGAR</text>
+    <circle cx="170" cy="-12" r="9" fill="#FFD60A"/>
+    <text x="0" y="28" font-family="ui-sans-serif" font-weight="500" font-size="14" fill="#0A0F1F" letter-spacing="3" opacity="0.65">ЮРИДИЧНИЙ ЩИТ</text>
+  </g>
+
+  <!-- Headline -->
+  <text x="80" y="280" font-family="ui-sans-serif, system-ui" font-weight="800" font-size="72" fill="#0A0F1F">Не залишайтесь сам</text>
+  <text x="80" y="358" font-family="ui-sans-serif, system-ui" font-weight="800" font-size="72" fill="#0A0F1F">на сам із системою.</text>
+
+  <!-- Accent line -->
+  <rect x="80" y="395" width="720" height="14" fill="#FFD60A" rx="2"/>
+
+  <!-- Sub -->
+  <text x="80" y="470" font-family="ui-sans-serif" font-weight="400" font-size="26" fill="#0A0F1F" opacity="0.7">AI-діагностика за 5 хв · Адвокати НААУ · Гаряча лінія 24/7</text>
+
+  <!-- Phone -->
+  <g transform="translate(80 520)">
+    <rect width="320" height="62" rx="8" fill="#1B4DFF"/>
+    <text x="160" y="40" text-anchor="middle" font-family="ui-sans-serif" font-weight="600" font-size="22" fill="white">📞 0 800 357 288</text>
+  </g>
+
+  <!-- Shield (right) -->
+  <g transform="translate(900 120) scale(1.4)">
+    <path d="M120 30 L210 60 V165 c0 50 -38 88 -90 110 c-52 -22 -90 -60 -90 -110 V60 Z" fill="white" stroke="#1B4DFF" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M120 80 L195 105 V165 c0 4 -2 8 -5 11" stroke="#FFD60A" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <text x="120" y="200" text-anchor="middle" font-family="ui-sans-serif" font-weight="800" font-size="110" fill="#1B4DFF">L</text>
+    <circle cx="175" cy="195" r="8" fill="#FFD60A"/>
+  </g>
+</svg>

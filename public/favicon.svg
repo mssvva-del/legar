@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="12" fill="#1B4DFF"/>
+  <path d="M32 12 L50 19 V37 c0 11 -8 19 -18 22 c-10 -3 -18 -11 -18 -22 V19 Z" fill="none" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+  <text x="32" y="46" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-weight="800" font-size="30" fill="white">L</text>
+  <circle cx="44" cy="44" r="3" fill="#FFD60A"/>
+</svg>
