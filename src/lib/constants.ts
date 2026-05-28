@@ -13,11 +13,22 @@ export const COMPANY = {
 
 export const CONTACTS = {
   email: "mail@legar.com.ua",
+  // Безкоштовна гаряча лінія
   phone: "0 800 357 288",
   phoneFormatted: "+38 (0800) 357-288",
   phoneTel: "tel:+380800357288",
-  telegram: "https://t.me/legarukr",
-  telegramHandle: "@legarukr",
+  // Прямий номер (WhatsApp / Viber)
+  phoneDirect: "+38 068 912 73 65",
+  phoneDirectTel: "tel:+380689127365",
+  // Месенджери (підтримка)
+  telegram: "https://t.me/legar_ukr",
+  telegramHandle: "@legar_ukr",
+  whatsapp: "https://wa.me/380689127365",
+  viber: "viber://chat?number=+380689127365",
+  // Канал
+  telegramChannel: "https://t.me/legarukr",
+  telegramChannelHandle: "@legarukr",
+  // Соцмережі
   instagram: "https://instagram.com/legarukr",
   youtube: "https://youtube.com/@legarukr",
   facebook: "https://facebook.com/legarukr",

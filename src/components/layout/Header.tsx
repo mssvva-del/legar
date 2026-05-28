@@ -15,7 +15,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { Logo } from "@/components/shared/Logo";
-import { PhoneButton } from "@/components/shared/PhoneButton";
 import { MobileMenu } from "./MobileMenu";
 import { SOSModal } from "./SOSModal";
 import { NAV_PRIMARY, SERVICES, CITIES } from "@/lib/constants";
@@ -213,18 +212,25 @@ export function Header() {
 
           {/* Right cluster */}
           <div className="flex items-center gap-2 lg:gap-3">
-            {/* Phone (icon only on mobile, full on lg) */}
-            <PhoneButton
-              variant="icon"
-              source="header"
-              showNumber={false}
-              className="lg:hidden"
-            />
-            <PhoneButton
-              variant="ghost"
-              source="header"
-              className="hidden lg:inline-flex"
-            />
+            {/* Зв'язатися — mobile icon */}
+            <button
+              type="button"
+              onClick={handleSOS}
+              aria-label="Зв'язатися"
+              className="-ml-1 inline-flex h-11 w-11 items-center justify-center rounded-[8px] text-[var(--color-ink)] transition-colors hover:bg-[var(--color-bg-200)] lg:hidden"
+            >
+              <Phone className="h-5 w-5" aria-hidden="true" />
+            </button>
+
+            {/* Зв'язатися — desktop */}
+            <button
+              type="button"
+              onClick={handleSOS}
+              className="hidden h-11 items-center gap-2 rounded-[8px] px-4 text-[14px] font-semibold text-[var(--color-ink)]/85 transition-all hover:bg-[var(--color-bg-200)] hover:text-[var(--color-primary)] lg:inline-flex"
+            >
+              <Phone className="h-4 w-4" aria-hidden="true" />
+              Зв'язатися
+            </button>
 
             {/* SOS */}
             <button

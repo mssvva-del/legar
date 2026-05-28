@@ -8,6 +8,10 @@ type AnalyticsEvent =
   | { name: "ai_diagnostic_started" }
   | { name: "sos_opened"; source: "header" | "sticky" | "hero" | "footer" }
   | { name: "phone_clicked"; source: string }
+  | { name: "phone_direct_clicked"; source: string }
+  | { name: "telegram_clicked"; source: string }
+  | { name: "whatsapp_clicked"; source: string }
+  | { name: "viber_clicked"; source: string }
   | { name: "service_card_clicked"; service: string };
 
 export function trackEvent(event: AnalyticsEvent) {
