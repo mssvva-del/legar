@@ -8,8 +8,6 @@ import { toast } from "sonner";
 import {
   Phone,
   Mail,
-  MessageCircle,
-  Clock,
   Building2,
   Sparkles,
   Send,
@@ -17,6 +15,8 @@ import {
 } from "lucide-react";
 import {
   TelegramIcon,
+  WhatsAppIcon,
+  ViberIcon,
   InstagramIcon,
   YoutubeIcon,
   FacebookIcon,
@@ -46,7 +46,16 @@ const CONTACT_CARDS = [
     badge: "24/7",
   },
   {
-    icon: MessageCircle,
+    icon: Phone,
+    title: "Прямий номер",
+    primary: CONTACTS.phoneDirect,
+    secondary: "Для термінових питань",
+    href: CONTACTS.phoneDirectTel,
+    cta: "Зателефонувати",
+    badge: "SOS",
+  },
+  {
+    icon: TelegramIcon,
     title: "Telegram",
     primary: CONTACTS.telegramHandle,
     secondary: "Відповідь упродовж 15 хвилин",
@@ -55,21 +64,30 @@ const CONTACT_CARDS = [
     badge: "Швидко",
   },
   {
+    icon: WhatsAppIcon,
+    title: "WhatsApp",
+    primary: CONTACTS.phoneDirect,
+    secondary: "Зручний месенджер",
+    href: CONTACTS.whatsapp,
+    cta: "Написати",
+    badge: null,
+  },
+  {
+    icon: ViberIcon,
+    title: "Viber",
+    primary: CONTACTS.phoneDirect,
+    secondary: "Зручний месенджер",
+    href: CONTACTS.viber,
+    cta: "Написати",
+    badge: null,
+  },
+  {
     icon: Mail,
     title: "E-mail",
     primary: CONTACTS.email,
     secondary: "Для офіційних запитів та документів",
     href: `mailto:${CONTACTS.email}`,
     cta: "Написати листа",
-    badge: null,
-  },
-  {
-    icon: Clock,
-    title: "Графік роботи",
-    primary: "Пн–Пт 09:00–20:00",
-    secondary: "SOS-лінія — цілодобово",
-    href: null,
-    cta: null,
     badge: null,
   },
 ];
@@ -81,8 +99,13 @@ const BUSINESS_HOURS = [
   { day: "SOS-лінія", time: "24/7 без вихідних" },
 ];
 
+const MESSENGERS = [
+  { icon: TelegramIcon, label: "Telegram", handle: CONTACTS.telegramHandle, href: CONTACTS.telegram },
+  { icon: WhatsAppIcon, label: "WhatsApp", handle: CONTACTS.phoneDirect, href: CONTACTS.whatsapp },
+  { icon: ViberIcon, label: "Viber", handle: CONTACTS.phoneDirect, href: CONTACTS.viber },
+];
+
 const SOCIAL = [
-  { icon: TelegramIcon, label: "Telegram", href: CONTACTS.telegram },
   { icon: InstagramIcon, label: "Instagram", href: CONTACTS.instagram },
   { icon: YoutubeIcon, label: "YouTube", href: CONTACTS.youtube },
   { icon: FacebookIcon, label: "Facebook", href: CONTACTS.facebook },
@@ -141,7 +164,7 @@ export default function KontaktyPage() {
 
       {/* ── CONTACT CARDS ── */}
       <section className="py-12 px-4">
-        <div className="max-w-5xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="max-w-5xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {CONTACT_CARDS.map(({ icon: Icon, title, primary, secondary, href, cta, badge }) => (
             <div key={title} className="bg-[var(--color-bg-200)] rounded-2xl p-6 border border-[var(--color-bg-300)]">
               <div className="flex items-start justify-between mb-4">
@@ -358,6 +381,28 @@ export default function KontaktyPage() {
                       {time}
                     </span>
                   </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Messengers */}
+            <div className="bg-white rounded-2xl p-6 border border-[var(--color-bg-300)]">
+              <h3 className="font-extrabold text-[var(--color-ink)] mb-4">Месенджери</h3>
+              <div className="space-y-2">
+                {MESSENGERS.map(({ icon: Icon, label, handle, href }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target={label !== "Viber" ? "_blank" : undefined}
+                    rel={label !== "Viber" ? "noopener noreferrer" : undefined}
+                    className="flex items-center gap-3 py-2 px-3 rounded-xl hover:bg-[var(--color-bg-200)] transition-colors"
+                  >
+                    <Icon size={18} className="text-[var(--color-primary)]" />
+                    <div className="flex flex-col">
+                      <span className="text-sm font-semibold text-gray-700">{label}</span>
+                      <span className="text-xs text-gray-400">{handle}</span>
+                    </div>
+                  </a>
                 ))}
               </div>
             </div>
