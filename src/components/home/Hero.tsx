@@ -16,7 +16,7 @@ export function Hero() {
 
       <div className="container-legar relative grid grid-cols-1 gap-12 pb-16 pt-16 md:pb-20 md:pt-24 lg:grid-cols-12 lg:items-center lg:gap-8 lg:pb-24 lg:pt-28">
         {/* Left column — 7/12 desktop */}
-        <div className="order-2 lg:order-1 lg:col-span-7">
+        <div className="order-1 lg:col-span-7">
           {/* Eyebrow badge */}
           <div className="inline-flex items-center gap-2 rounded-full bg-[var(--color-bg-200)] px-4 py-2 text-[12px] font-medium uppercase tracking-[0.14em] text-[var(--color-ink)]">
             <ShieldCheck
@@ -81,7 +81,7 @@ export function Hero() {
         </div>
 
         {/* Right column — illustration 5/12 */}
-        <div className="order-1 lg:order-2 lg:col-span-5">
+        <div className="order-2 lg:col-span-5">
           <div className="relative mx-auto max-w-[440px]">
             <HeroShield className="h-auto w-full" />
           </div>
