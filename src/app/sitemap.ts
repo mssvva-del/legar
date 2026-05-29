@@ -6,6 +6,7 @@ import {
   COMPANY_PAGES,
   LEGAL_PAGES,
 } from "@/lib/constants";
+import { ARTICLES } from "@/lib/blog-content";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_SITE_URL || COMPANY.url;
@@ -45,5 +46,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.3,
   }));
 
-  return [...root, ...company, ...services, ...cities, ...legal];
+  const articles = ARTICLES.map((a) => ({
+    url: `${base}/blog/${a.slug}`,
+    lastModified: new Date(a.updatedAt),
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+
+  return [...root, ...company, ...services, ...cities, ...legal, ...articles];
 }
