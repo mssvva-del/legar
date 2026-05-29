@@ -3,7 +3,7 @@ import {
   Sparkles, Shield, FileCheck, Users, Gavel, Phone, Building2,
   ArrowRight, Clock, Calendar, CheckCircle2, type LucideIcon,
 } from "lucide-react";
-import { SERVICES, CONTACTS } from "@/lib/constants";
+import { SERVICES, CONTACTS, CITIES } from "@/lib/constants";
 import { ServiceFAQ } from "@/components/services/ServiceFAQ";
 import type { Article } from "@/lib/blog-content";
 
@@ -177,6 +177,39 @@ export function ArticleLayout({ article }: ArticleLayoutProps) {
 
       {/* ── FAQ ───────────────────────────────────────────────────────────── */}
       <ServiceFAQ items={article.faq} />
+
+      {/* ── CITIES DISCOVERY ──────────────────────────────────────────────── */}
+      <section aria-labelledby="article-cities-heading" className="py-14 md:py-20">
+        <div className="container-legar">
+          <h2
+            id="article-cities-heading"
+            className="font-[family-name:var(--font-manrope)] text-[22px] font-extrabold text-[var(--color-ink)] md:text-[28px]"
+          >
+            Знайдіть адвоката у вашому місті
+          </h2>
+          <p className="mt-2 text-[15px] leading-relaxed text-[var(--color-ink)]/65">
+            Адвокати-партнери LEGAR працюють у {CITIES.length} містах України.
+          </p>
+          <ul className="mt-6 flex flex-wrap gap-2">
+            {CITIES.map((city) => {
+              const primaryService = article.relatedServices[0];
+              const href = primaryService
+                ? (`/poslugy/${primaryService}/${city.slug}` as `/poslugy/${string}`)
+                : (`/mista/${city.slug}` as `/mista/${string}`);
+              return (
+                <li key={city.slug}>
+                  <Link
+                    href={href}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-bg-300)] bg-white px-4 py-2 text-[13px] font-medium text-[var(--color-ink)]/75 transition-all hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
+                  >
+                    {city.nameUk}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </section>
 
       {/* ── FINAL CTA ─────────────────────────────────────────────────────── */}
       <section aria-labelledby="article-cta-heading" className="bg-[var(--color-accent)] py-20 md:py-24">

@@ -7,6 +7,7 @@ import { HowItWorks } from "@/components/home/HowItWorks";
 import { WhyLegar } from "@/components/home/WhyLegar";
 import { B2BTeaser } from "@/components/home/B2BTeaser";
 import { CasesCarousel } from "@/components/home/CasesCarousel";
+import { BlogPreview } from "@/components/home/BlogPreview";
 import { FAQ } from "@/components/home/FAQ";
 import { FinalCTA } from "@/components/home/FinalCTA";
 import { COMPANY, CONTACTS, SERVICES } from "@/lib/constants";
@@ -98,6 +99,7 @@ export default function HomePage() {
       <WhyLegar />
       <B2BTeaser />
       <CasesCarousel />
+      <BlogPreview />
       <FAQ />
       <FinalCTA />
     </>

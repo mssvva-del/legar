@@ -12,6 +12,7 @@ import { TimingBlock } from "./TimingBlock";
 import { CasesGrid } from "./CasesGrid";
 import { ServiceFAQ } from "./ServiceFAQ";
 import { RelatedServices } from "./RelatedServices";
+import { ServiceRelatedArticles } from "./ServiceRelatedArticles";
 import { ServiceFinalCTA } from "./ServiceFinalCTA";
 
 interface ServicePageLayoutProps {
@@ -73,6 +74,9 @@ export function ServicePageLayout({ content }: ServicePageLayoutProps) {
           </p>
         </div>
       )}
+
+      {/* Related blog articles */}
+      <ServiceRelatedArticles serviceSlug={content.slug} />
 
       {/* Related services */}
       <RelatedServices slugs={content.relatedServices} />
