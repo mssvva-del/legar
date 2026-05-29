@@ -303,6 +303,46 @@ export function CityPageLayout({ content }: CityPageLayoutProps) {
         </div>
       </section>
 
+      {/* ── 6b. ПОСЛУГИ В ЦЬОМУ МІСТІ ──────────────────────────────────────── */}
+      <section aria-labelledby="city-services-heading" className="bg-[var(--color-bg-200)] py-14 md:py-20">
+        <div className="container-legar">
+          <h2
+            id="city-services-heading"
+            className="font-[family-name:var(--font-manrope)] text-[24px] font-extrabold text-[var(--color-ink)] md:text-[32px]"
+          >
+            Послуги LEGAR {content.nameInflected}
+          </h2>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {SERVICES.map((service) => {
+              const ServiceIcon = ICON_MAP[service.icon] ?? Shield;
+              return (
+                <Link
+                  key={service.slug}
+                  href={`/poslugy/${service.slug}/${content.slug}` as `/poslugy/${string}`}
+                  className="group flex flex-col rounded-[var(--radius-card)] border border-[var(--color-bg-300)] bg-white p-6 transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-hover)]"
+                >
+                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-[10px] bg-[var(--color-bg-200)] text-[var(--color-primary)] transition-colors group-hover:bg-[var(--color-primary)] group-hover:text-white">
+                    <ServiceIcon className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                  <h3 className="mt-4 font-[family-name:var(--font-manrope)] text-[17px] font-extrabold text-[var(--color-ink)]">
+                    {service.shortTitle} {content.nameInflected}
+                  </h3>
+                  <p className="mt-1.5 flex-1 text-[14px] leading-relaxed text-[var(--color-ink)]/60">
+                    {service.description}
+                  </p>
+                  <div className="mt-4 flex items-center justify-between border-t border-[var(--color-bg-300)] pt-3">
+                    <span className="font-[family-name:var(--font-manrope)] text-[15px] font-extrabold text-[var(--color-ink)]">
+                      {service.priceLabel}
+                    </span>
+                    <ArrowRight className="h-4 w-4 text-[var(--color-primary)] transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* ── 7. FAQ ─────────────────────────────────────────────────────────── */}
       <ServiceFAQ items={content.faq} />
 

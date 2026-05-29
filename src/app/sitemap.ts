@@ -7,6 +7,7 @@ import {
   LEGAL_PAGES,
 } from "@/lib/constants";
 import { ARTICLES } from "@/lib/blog-content";
+import { allServiceCityPairs } from "@/lib/service-city-content";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_SITE_URL || COMPANY.url;
@@ -53,5 +54,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...root, ...company, ...services, ...cities, ...legal, ...articles];
+  const serviceCities = allServiceCityPairs().map(({ service, city }) => ({
+    url: `${base}/poslugy/${service}/${city}`,
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: 0.7,
+  }));
+
+  return [
+    ...root,
+    ...company,
+    ...services,
+    ...cities,
+    ...legal,
+    ...articles,
+    ...serviceCities,
+  ];
 }
