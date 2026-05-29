@@ -5,7 +5,8 @@ import { CITIES } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Міста",
-  description: "Адвокати-партнери LEGAR у Києві, Львові, Дніпрі, Харкові, Одесі.",
+  description:
+    "Адвокати-партнери LEGAR у Києві, Львові, Дніпрі, Харкові, Одесі та інших обласних центрах України. Виїзд у ТЦК, оскарження ВЛК, SOS 24/7.",
 };
 
 export default function MistaPage() {
@@ -17,8 +18,8 @@ export default function MistaPage() {
             Міста, де ми працюємо
           </h1>
           <p className="mx-auto mt-5 max-w-[640px] text-[18px] leading-relaxed text-[var(--color-ink)]/70">
-            Адвокати-партнери LEGAR представлені у 5 містах України. Виїзд у
-            ТЦК — у будь-яке місто за окремою заявкою.
+            Адвокати-партнери LEGAR представлені у {CITIES.length} містах
+            України. Виїзд у ТЦК — у будь-яке місто за окремою заявкою.
           </p>
         </div>
 

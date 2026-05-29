@@ -3,7 +3,7 @@ import {
   Sparkles, Shield, FileCheck, Users, Gavel, Phone, Building2,
   ArrowRight, CheckCircle2, Clock, MapPin, Quote, type LucideIcon,
 } from "lucide-react";
-import { SERVICES, CONTACTS } from "@/lib/constants";
+import { SERVICES, CONTACTS, CITIES } from "@/lib/constants";
 import { ServiceFAQ } from "@/components/services/ServiceFAQ";
 import type { CityContent } from "@/lib/cities-content";
 
@@ -356,7 +356,7 @@ export function CityPageLayout({ content }: CityPageLayoutProps) {
                 "Кабінет справи",
                 "Прозора ціна",
                 "SOS 24/7",
-                "5 міст покриття",
+                `${CITIES.length} міст покриття`,
               ].map((item) => (
                 <div key={item} className="flex items-center gap-2 text-[13px] text-[var(--color-ink)]/70">
                   <CheckCircle2 className="h-4 w-4 flex-shrink-0 text-[var(--color-ink)]/50" aria-hidden="true" />

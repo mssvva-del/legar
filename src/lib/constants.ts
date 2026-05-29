@@ -134,6 +134,18 @@ export const CITIES: City[] = [
   { slug: "dnipro", nameUk: "Дніпро", nameInflected: "у Дніпрі" },
   { slug: "kharkiv", nameUk: "Харків", nameInflected: "у Харкові" },
   { slug: "odesa", nameUk: "Одеса", nameInflected: "в Одесі" },
+  { slug: "vinnytsia", nameUk: "Вінниця", nameInflected: "у Вінниці" },
+  { slug: "poltava", nameUk: "Полтава", nameInflected: "у Полтаві" },
+  { slug: "chernihiv", nameUk: "Чернігів", nameInflected: "у Чернігові" },
+  { slug: "cherkasy", nameUk: "Черкаси", nameInflected: "у Черкасах" },
+  { slug: "khmelnytskyi", nameUk: "Хмельницький", nameInflected: "у Хмельницькому" },
+  { slug: "ivano-frankivsk", nameUk: "Івано-Франківськ", nameInflected: "в Івано-Франківську" },
+  { slug: "ternopil", nameUk: "Тернопіль", nameInflected: "у Тернополі" },
+  { slug: "lutsk", nameUk: "Луцьк", nameInflected: "у Луцьку" },
+  { slug: "rivne", nameUk: "Рівне", nameInflected: "у Рівному" },
+  { slug: "uzhhorod", nameUk: "Ужгород", nameInflected: "в Ужгороді" },
+  { slug: "chernivtsi", nameUk: "Чернівці", nameInflected: "у Чернівцях" },
+  { slug: "zhytomyr", nameUk: "Житомир", nameInflected: "у Житомирі" },
 ];
 
 export const NAV_PRIMARY = [
