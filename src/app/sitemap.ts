@@ -27,21 +27,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const services = SERVICES.map((s) => ({
     url: `${base}/poslugy/${s.slug}`,
     lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.85,
+    changeFrequency: "weekly" as const,
+    priority: 0.9,
   }));
 
   const cities = CITIES.map((c) => ({
     url: `${base}/mista/${c.slug}`,
     lastModified: now,
     changeFrequency: "monthly" as const,
-    priority: 0.75,
+    priority: 0.8,
   }));
 
   const legal = LEGAL_PAGES.map((p) => ({
     url: `${base}/legal/${p.slug}`,
     lastModified: now,
-    changeFrequency: "yearly" as const,
+    changeFrequency: "monthly" as const,
     priority: 0.3,
   }));
 

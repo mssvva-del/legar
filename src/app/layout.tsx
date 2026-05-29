@@ -38,9 +38,14 @@ export const metadata: Metadata = {
     "ВЛК",
     "СЗЧ",
     "бронювання",
-    "юридична консультація",
+    "юрист онлайн",
+    "AI юрист",
     "оскарження ВЛК",
-    "стаття 407 ККУ",
+    "штраф ТЦК",
+    "стаття 407",
+    "мобілізація",
+    "відстрочка",
+    "юридична консультація",
     "АІ-діагностика",
     "LEGAR",
   ],
@@ -97,6 +102,7 @@ export const metadata: Metadata = {
   },
   other: {
     "telegram:channel": CONTACTS.telegramHandle,
+    language: "uk",
   },
 };
 

@@ -19,35 +19,69 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
+  const sameAs = [
+    CONTACTS.telegram,
+    CONTACTS.instagram,
+    CONTACTS.youtube,
+    CONTACTS.facebook,
+    CONTACTS.tiktok,
+  ];
+
   const orgJsonLd = {
     "@context": "https://schema.org",
-    "@type": "LegalService",
-    name: COMPANY.name,
-    description: COMPANY.description,
-    url: COMPANY.url,
-    telephone: CONTACTS.phoneFormatted,
-    email: CONTACTS.email,
-    areaServed: "UA",
-    sameAs: [
-      CONTACTS.telegram,
-      CONTACTS.instagram,
-      CONTACTS.youtube,
-      CONTACTS.facebook,
-      CONTACTS.tiktok,
+    "@graph": [
+      {
+        "@type": ["Organization", "LegalService"],
+        "@id": `${COMPANY.url}/#organization`,
+        name: COMPANY.name,
+        legalName: COMPANY.legalName,
+        slogan: COMPANY.tagline,
+        description: COMPANY.description,
+        url: COMPANY.url,
+        logo: `${COMPANY.url}/favicon.svg`,
+        image: `${COMPANY.url}/og-image.svg`,
+        telephone: CONTACTS.phoneFormatted,
+        email: CONTACTS.email,
+        areaServed: { "@type": "Country", name: "Україна" },
+        sameAs,
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "Послуги LEGAR",
+          itemListElement: SERVICES.map((s, i) => ({
+            "@type": "Offer",
+            position: i + 1,
+            name: s.title,
+            description: s.description,
+            priceCurrency: "UAH",
+            price: s.priceUah,
+            url: `${COMPANY.url}/poslugy/${s.slug}`,
+          })),
+        },
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${COMPANY.url}/#website`,
+        url: COMPANY.url,
+        name: COMPANY.name,
+        description: COMPANY.description,
+        inLanguage: "uk-UA",
+        publisher: { "@id": `${COMPANY.url}/#organization` },
+        potentialAction: {
+          "@type": "SearchAction",
+          target: {
+            "@type": "EntryPoint",
+            urlTemplate: `${COMPANY.url}/blog?q={search_term_string}`,
+          },
+          "query-input": "required name=search_term_string",
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Головна", item: COMPANY.url },
+        ],
+      },
     ],
-    hasOfferCatalog: {
-      "@type": "OfferCatalog",
-      name: "Послуги LEGAR",
-      itemListElement: SERVICES.map((s, i) => ({
-        "@type": "Offer",
-        position: i + 1,
-        name: s.title,
-        description: s.description,
-        priceCurrency: "UAH",
-        price: s.priceUah,
-        url: `${COMPANY.url}/poslugy/${s.slug}`,
-      })),
-    },
   };
 
   return (
