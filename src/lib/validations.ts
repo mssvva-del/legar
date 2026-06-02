@@ -8,16 +8,24 @@ import { CITIES, SERVICES } from "./constants";
  */
 const PHONE_RE = /^(?:\+?380\d{9}|0\d{9})$/;
 
+/** Люди часто вводять номер з пробілами/дужками/дефісами ("099 608 40 68").
+ *  Прибираємо все зайве перед перевіркою та збереженням. */
+const normalizePhone = (v: string): string => v.replace(/[\s()\-.]/g, "");
+
+/** Спільна схема телефону: нормалізує, потім валідує. */
+const phoneSchema = z
+  .string()
+  .trim()
+  .transform(normalizePhone)
+  .refine((v) => PHONE_RE.test(v), "Формат: 0XXXXXXXXX або +380XXXXXXXXX");
+
 export const leadFormSchema = z.object({
   name: z
     .string()
     .trim()
     .min(2, "Введіть ім'я (мінімум 2 символи)")
     .max(80, "Занадто довге ім'я"),
-  phone: z
-    .string()
-    .trim()
-    .regex(PHONE_RE, "Формат: 0XXXXXXXXX або +380XXXXXXXXX"),
+  phone: phoneSchema,
   email: z
     .string()
     .trim()
@@ -75,10 +83,7 @@ export const lawyerApplicationSchema = z.object({
     .string()
     .trim()
     .email("Невірний формат e-mail"),
-  phone: z
-    .string()
-    .trim()
-    .regex(PHONE_RE, "Формат: 0XXXXXXXXX або +380XXXXXXXXX"),
+  phone: phoneSchema,
   city: z
     .string()
     .trim()

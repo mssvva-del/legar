@@ -7,6 +7,11 @@ import { cn } from "@/lib/utils";
 
 const PHONE_RE = /^(?:\+?380\d{9}|0\d{9})$/;
 
+/** Прибирає пробіли, дужки, дефіси, крапки — люди часто вводять "099 608 4068". */
+function normalizePhone(v: string): string {
+  return v.replace(/[\s()\-.]/g, "");
+}
+
 interface FormState {
   name: string;
   phone: string;
@@ -71,7 +76,7 @@ export function LandingLeadForm({
     const e: FieldError = {};
     if (!form.name.trim() || form.name.trim().length < 2)
       e.name = "Введіть ім'я (мінімум 2 символи)";
-    if (!PHONE_RE.test(form.phone.trim()))
+    if (!PHONE_RE.test(normalizePhone(form.phone)))
       e.phone = "Формат: 0XXXXXXXXX або +380XXXXXXXXX";
     if (!form.message.trim() || form.message.trim().length < 5)
       e.message = "Опишіть ситуацію (хоча б кілька слів)";
@@ -108,7 +113,7 @@ export function LandingLeadForm({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: form.name.trim(),
-          phone: form.phone.trim(),
+          phone: normalizePhone(form.phone),
           city: form.city || undefined,
           service: "antyshtraf-tck-360",
           message: fullMessage,
