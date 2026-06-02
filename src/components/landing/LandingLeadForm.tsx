@@ -33,13 +33,20 @@ interface LandingLeadFormProps {
   className?: string;
 }
 
-/** Fires fbq('track', 'Lead') якщо Meta Pixel ініційовано */
-function fireMetaLead() {
+/** Читає cookie (для _fbp / _fbc — підвищують матчинг CAPI). */
+function getCookie(name: string): string | undefined {
+  if (typeof document === "undefined") return undefined;
+  const m = document.cookie.match(new RegExp("(?:^|; )" + name + "=([^;]*)"));
+  return m ? decodeURIComponent(m[1]) : undefined;
+}
+
+/** Fires fbq('track','Lead') з eventID для дедуплікації з серверним CAPI. */
+function fireMetaLead(eventId?: string) {
   if (typeof window === "undefined") return;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const w = window as any;
   if (typeof w.fbq === "function") {
-    w.fbq("track", "Lead");
+    w.fbq("track", "Lead", {}, eventId ? { eventID: eventId } : undefined);
   }
 }
 
@@ -107,6 +114,12 @@ export function LandingLeadForm({
         ? new URLSearchParams(window.location.search)
         : new URLSearchParams();
 
+    // event_id для дедуплікації браузерної та серверної (CAPI) події Lead
+    const eventId =
+      typeof crypto !== "undefined" && "randomUUID" in crypto
+        ? crypto.randomUUID()
+        : `lead-${Date.now()}-${Math.round(Math.random() * 1e6)}`;
+
     try {
       const res = await fetch("/api/leads", {
         method: "POST",
@@ -121,6 +134,9 @@ export function LandingLeadForm({
           utm_source: params.get("utm_source") ?? "meta",
           utm_medium: params.get("utm_medium") ?? "paid",
           utm_campaign: params.get("utm_campaign") ?? "antishtraf-site",
+          event_id: eventId,
+          fbp: getCookie("_fbp"),
+          fbc: getCookie("_fbc"),
         }),
       });
 
@@ -133,8 +149,8 @@ export function LandingLeadForm({
       setLeadId(id);
       setIsSuccess(true);
 
-      // 🔥 Pixel events
-      fireMetaLead();
+      // 🔥 Pixel events (eventID — дедуп з серверним CAPI)
+      fireMetaLead(eventId);
       fireGtagLead("antyshtraf-tck-360");
     } catch (err) {
       const msg =

@@ -66,6 +66,10 @@ export const leadApiSchema = leadFormSchema.extend({
   utm_source: z.string().optional(),
   utm_medium: z.string().optional(),
   utm_campaign: z.string().optional(),
+  // Meta CAPI: дедуп з браузерним пікселем + cookie для матчингу
+  event_id: z.string().optional(),
+  fbp: z.string().optional(),
+  fbc: z.string().optional(),
 });
 
 export type LeadApiPayload = z.infer<typeof leadApiSchema>;

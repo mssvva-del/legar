@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import { NextResponse, type NextRequest } from "next/server";
 import { leadApiSchema } from "@/lib/validations";
 import { createServiceClient } from "@/lib/supabase/server";
@@ -5,6 +6,7 @@ import type { LeadInsert } from "@/lib/supabase/types";
 import { CONTACTS } from "@/lib/constants";
 import { sendEmail } from "@/lib/emails/send";
 import { leadConfirmationTemplate } from "@/lib/emails/templates/lead-confirmation";
+import { sendMetaLead } from "@/lib/meta-capi";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -38,6 +40,20 @@ export async function POST(req: NextRequest) {
 
   const data = parsed.data;
 
+  // Контекст для Meta CAPI (server-side подія Lead)
+  const capiCtx = {
+    eventId: data.event_id || crypto.randomUUID(),
+    phone: data.phone,
+    name: data.name,
+    city: data.city || undefined,
+    clientIp:
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || undefined,
+    userAgent: req.headers.get("user-agent") || undefined,
+    eventSourceUrl: req.headers.get("referer") || "https://legar.com.ua/landing/antishtraf",
+    fbp: data.fbp,
+    fbc: data.fbc,
+  };
+
   // Якщо Supabase ще не налаштований у .env.local — повертаємо помилку 503,
   // але форма принаймні валідує і не падає.
   if (
@@ -50,6 +66,7 @@ export async function POST(req: NextRequest) {
       data,
     );
     await notifyTelegram(data, null);
+    await sendMetaLead(capiCtx);
     return NextResponse.json(
       {
         success: true,
@@ -106,7 +123,10 @@ export async function POST(req: NextRequest) {
     await sendEmail({ to: data.email, ...template });
   }
 
-  return NextResponse.json({ success: true, leadId: inserted.id });
+  // Meta CAPI — серверна подія Lead (дедуп з пікселем за event_id)
+  await sendMetaLead(capiCtx);
+
+  return NextResponse.json({ success: true, leadId: inserted.id, eventId: capiCtx.eventId });
 }
 
 /**
