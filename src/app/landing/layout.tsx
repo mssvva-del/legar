@@ -1,8 +1,8 @@
 /**
- * Landing-page layout — без Header і Footer.
+ * Landing-page layout — з повноцінним Header і StickySOS, без Footer.
  * Успадковує root layout (шрифти, Toaster, CookieBanner, GTM, GA4, Meta Pixel).
- * Містить плаваючу кнопку SOS (телефон + месенджери).
  */
+import { Header } from "@/components/layout/Header";
 import { StickySOS } from "@/components/layout/StickySOS";
 
 export default function LandingLayout({
@@ -12,6 +12,7 @@ export default function LandingLayout({
 }) {
   return (
     <>
+      <Header />
       {children}
       <StickySOS />
     </>

@@ -100,27 +100,6 @@ export default function AntishtrafLandingPage() {
   return (
     <div className="min-h-screen bg-white font-sans">
 
-      {/* ── STICKY TOP BAR ──────────────────────────────────────────────── */}
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[var(--color-ink)] shadow-sm">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <Shield className="h-6 w-6 text-[var(--color-accent)]" />
-            <span className="font-[family-name:var(--font-manrope)] text-[20px] font-extrabold tracking-tight text-white">
-              LEGAR
-            </span>
-          </Link>
-          {/* Phone */}
-          <a
-            href={CONTACTS.phoneTel}
-            className="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-[14px] font-semibold text-white transition-colors hover:bg-white/20"
-          >
-            <Phone className="h-4 w-4 text-[var(--color-accent)]" aria-hidden="true" />
-            {CONTACTS.phone}
-          </a>
-        </div>
-      </header>
-
       {/* ── HERO ────────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-[var(--color-ink)] pb-16 pt-12 md:pb-24 md:pt-16">
         {/* Grid overlay */}
