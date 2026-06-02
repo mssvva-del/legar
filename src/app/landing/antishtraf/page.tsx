@@ -2,10 +2,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   Shield, CheckCircle2, Phone, Clock, Star, ChevronDown,
-  AlertTriangle, BadgeCheck, Gavel,
+  AlertTriangle, BadgeCheck, Gavel, Sparkles, FileCheck,
+  Users, Building2, ArrowRight,
 } from "lucide-react";
-import { CONTACTS, COMPANY } from "@/lib/constants";
+import { CONTACTS, COMPANY, SERVICES } from "@/lib/constants";
 import { LandingLeadForm } from "@/components/landing/LandingLeadForm";
+import type { LucideIcon } from "lucide-react";
+
+const SERVICE_ICON_MAP: Record<string, LucideIcon> = {
+  Sparkles, Shield, FileCheck, Users, Gavel, Phone, Building2,
+};
 
 export const metadata: Metadata = {
   title: "Оскаржити штраф ТЦК — безкоштовна оцінка від адвоката | LEGAR",
@@ -205,6 +211,79 @@ export default function AntishtrafLandingPage() {
               </span>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* ── УСІ ПОСЛУГИ LEGAR ───────────────────────────────────────────── */}
+      <section className="py-14 md:py-20">
+        <div className="mx-auto max-w-5xl px-4">
+          <div className="mb-10 text-center">
+            <h2 className="font-[family-name:var(--font-manrope)] text-[26px] font-extrabold text-[var(--color-ink)] md:text-[34px]">
+              Усі послуги LEGAR
+            </h2>
+            <p className="mt-3 text-[16px] text-[var(--color-ink)]/60">
+              Вирішуємо будь-яке питання з ТЦК, ВЛК, СЗЧ та бронювання — під ключ
+            </p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {SERVICES.map((service) => {
+              const Icon = SERVICE_ICON_MAP[service.icon] ?? Shield;
+              const isMain = service.slug === "antyshtraf-tck-360";
+              return (
+                <Link
+                  key={service.slug}
+                  href={`/poslugy/${service.slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`group flex flex-col rounded-[16px] border p-6 transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-hover)] ${
+                    isMain
+                      ? "border-[var(--color-primary)] bg-[var(--color-primary)]/[0.04] ring-1 ring-[var(--color-primary)]/20"
+                      : "border-[var(--color-bg-300)] bg-white"
+                  }`}
+                >
+                  {/* Icon */}
+                  <span
+                    className={`inline-flex h-11 w-11 items-center justify-center rounded-[10px] transition-colors ${
+                      isMain
+                        ? "bg-[var(--color-primary)] text-white"
+                        : "bg-[var(--color-bg-200)] text-[var(--color-primary)] group-hover:bg-[var(--color-primary)] group-hover:text-white"
+                    }`}
+                  >
+                    <Icon className="h-5 w-5" aria-hidden="true" />
+                  </span>
+
+                  {/* Title + badge */}
+                  <div className="mt-4 flex items-start justify-between gap-2">
+                    <h3 className="font-[family-name:var(--font-manrope)] text-[16px] font-extrabold leading-snug text-[var(--color-ink)]">
+                      {service.shortTitle}
+                    </h3>
+                    {isMain && (
+                      <span className="flex-shrink-0 rounded-full bg-[var(--color-accent)] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[var(--color-ink)]">
+                        Рекомендуємо
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Description */}
+                  <p className="mt-1.5 flex-1 text-[13px] leading-relaxed text-[var(--color-ink)]/60">
+                    {service.description}
+                  </p>
+
+                  {/* Price + arrow */}
+                  <div className="mt-4 flex items-center justify-between border-t border-[var(--color-bg-300)] pt-3">
+                    <span className="font-[family-name:var(--font-manrope)] text-[15px] font-extrabold text-[var(--color-ink)]">
+                      {service.priceLabel}
+                    </span>
+                    <ArrowRight
+                      className="h-4 w-4 text-[var(--color-primary)] transition-transform group-hover:translate-x-1"
+                      aria-hidden="true"
+                    />
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </section>
 
