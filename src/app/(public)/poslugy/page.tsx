@@ -10,6 +10,7 @@ import {
   Gavel,
   Phone,
   Building2,
+  Scale,
   ArrowRight,
   type LucideIcon,
 } from "lucide-react";
@@ -26,6 +27,7 @@ const ICON_MAP: Record<string, LucideIcon> = {
   Gavel,
   Phone,
   Building2,
+  Scale,
 };
 
 // ─── Category filter config ───────────────────────────────────────────────────
@@ -336,7 +338,7 @@ export default function PoslugyPage() {
                   Дізнатись більше
                   <ArrowRight className="h-5 w-5" aria-hidden="true" />
                 </Link>
-                <p className="mt-2 text-center text-[12px] text-white/45">від 65 000 грн</p>
+                <p className="mt-2 text-center text-[12px] text-white/45">від 50 000 грн</p>
               </div>
             </div>
           </div>

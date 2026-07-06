@@ -42,7 +42,8 @@ export type ServiceIcon =
   | "Users"
   | "Gavel"
   | "Phone"
-  | "Building2";
+  | "Building2"
+  | "Scale";
 
 export interface Service {
   slug: string;
@@ -69,8 +70,8 @@ export const SERVICES: Service[] = [
     slug: "antyshtraf-tck-360",
     title: "Антиштраф ТЦК 360°",
     shortTitle: "Антиштраф ТЦК",
-    priceUah: 8500,
-    priceLabel: "від 8 500 грн",
+    priceUah: 8000,
+    priceLabel: "від 8 000 грн",
     icon: "Shield",
     description:
       "Оскарження постанови ТЦК під ключ: досудово та в суді",
@@ -88,8 +89,8 @@ export const SERVICES: Service[] = [
     slug: "tck-suprovid",
     title: "Супровід ТЦК",
     shortTitle: "Супровід ТЦК",
-    priceUah: 4500,
-    priceLabel: "від 4 500 грн",
+    priceUah: 5000,
+    priceLabel: "від 5 000 грн",
     icon: "Users",
     description: "1 візит адвоката в ТЦК + 14 днів консультацій",
   },
@@ -97,8 +98,8 @@ export const SERVICES: Service[] = [
     slug: "szch-zahyst",
     title: "Захист по СЗЧ",
     shortTitle: "Захист СЗЧ",
-    priceUah: 28000,
-    priceLabel: "від 28 000 грн",
+    priceUah: 30000,
+    priceLabel: "від 30 000 грн",
     icon: "Gavel",
     description: "Кримінальний захист за ст. 407 ККУ",
   },
@@ -106,8 +107,8 @@ export const SERVICES: Service[] = [
     slug: "sos-24-7",
     title: "SOS 24/7",
     shortTitle: "SOS 24/7",
-    priceUah: 800,
-    priceLabel: "від 800 грн",
+    priceUah: 1500,
+    priceLabel: "від 1 500 грн",
     icon: "Phone",
     description: "Цілодобова гаряча лінія + виїзд адвоката",
   },
@@ -115,10 +116,19 @@ export const SERVICES: Service[] = [
     slug: "b2b-bronyuvannya",
     title: "B2B Бронювання",
     shortTitle: "B2B",
-    priceUah: 65000,
-    priceLabel: "від 65 000 грн",
+    priceUah: 50000,
+    priceLabel: "від 50 000 грн/міс",
     icon: "Building2",
     description: "Критичність + бронювання співробітників",
+  },
+  {
+    slug: "advokaty-sudovi",
+    title: "Адвокати — судові та досудові провадження",
+    shortTitle: "Адвокати",
+    priceUah: 200000,
+    priceLabel: "від 5 000 $",
+    icon: "Scale",
+    description: "Цивільні, кримінальні, адміністративні справи — досудово та в суді",
   },
 ];
 

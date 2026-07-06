@@ -171,7 +171,7 @@ export function SOSModal({ open, onClose, source }: SOSModalProps) {
             </button>
 
             <p className="mt-4 text-center text-[11px] text-[var(--color-ink)]/40">
-              Виїзд адвоката на ТЦК — від 7 500 грн. Ціни фіксовані.
+              Виїзд адвоката на ТЦК — від 8 000 грн. Ціни фіксовані.
             </p>
           </>
         ) : (

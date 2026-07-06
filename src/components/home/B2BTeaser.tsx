@@ -51,7 +51,7 @@ export function B2BTeaser() {
           </ul>
 
           <p className="mt-7 font-[family-name:var(--font-manrope)] text-[22px] font-extrabold text-[var(--color-accent)]">
-            Пакет від 65 000 грн
+            Пакет від 50 000 грн
           </p>
 
           <div className="mt-6 flex flex-wrap items-center gap-3">

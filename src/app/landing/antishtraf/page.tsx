@@ -3,20 +3,20 @@ import Link from "next/link";
 import {
   Shield, CheckCircle2, Phone, Clock, Star, ChevronDown,
   AlertTriangle, BadgeCheck, Gavel, Sparkles, FileCheck,
-  Users, Building2, ArrowRight,
+  Users, Building2, Scale, ArrowRight,
 } from "lucide-react";
 import { CONTACTS, COMPANY, SERVICES } from "@/lib/constants";
 import { LandingLeadForm } from "@/components/landing/LandingLeadForm";
 import type { LucideIcon } from "lucide-react";
 
 const SERVICE_ICON_MAP: Record<string, LucideIcon> = {
-  Sparkles, Shield, FileCheck, Users, Gavel, Phone, Building2,
+  Sparkles, Shield, FileCheck, Users, Gavel, Phone, Building2, Scale,
 };
 
 export const metadata: Metadata = {
   title: "Оскаржити штраф ТЦК — безкоштовна оцінка від адвоката | LEGAR",
   description:
-    "Отримали постанову ТЦК? Дізнайтесь за 15 хвилин, чи можна її скасувати. Адвокати НААУ. Антиштраф ТЦК 360° від 8 500 грн. Без передоплати.",
+    "Отримали постанову ТЦК? Дізнайтесь за 15 хвилин, чи можна її скасувати. Адвокати НААУ. Антиштраф ТЦК 360° від 8 000 грн. Без передоплати.",
   robots: { index: false, follow: false }, // лендинг не індексується
   openGraph: {
     title: "Оскаржити штраф ТЦК — безкоштовна оцінка",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 
 const TRUST_ITEMS = [
   { icon: BadgeCheck, label: "Адвокати НААУ", sub: "офіційна реєстрація" },
-  { icon: Gavel, label: "від 8 500 грн", sub: "без прихованих платежів" },
+  { icon: Gavel, label: "від 8 000 грн", sub: "без прихованих платежів" },
   { icon: Shield, label: "Без передоплати", sub: "спочатку оцінка — потім рішення" },
 ];
 
@@ -84,7 +84,7 @@ const FAQS = [
   },
   {
     q: "Скільки коштує послуга «Антиштраф ТЦК 360°»?",
-    a: "Від 8 500 грн — повний юридичний супровід: аналіз справи, скарга, досудовий та судовий етапи під ключ. Спочатку безкоштовна оцінка, потім — рішення.",
+    a: "Від 8 000 грн — повний юридичний супровід: аналіз справи, скарга, досудовий та судовий етапи під ключ. Спочатку безкоштовна оцінка, потім — рішення.",
   },
   {
     q: "Що якщо я не отримував постанову, але дізнався про штраф?",
@@ -142,7 +142,7 @@ export default function AntishtrafLandingPage() {
                 {[
                   { num: "38%", label: "постанов скасовують на досудовому етапі" },
                   { num: "10", label: "днів строку на оскарження" },
-                  { num: "8 500", label: "грн — послуга під ключ" },
+                  { num: "8 000", label: "грн — послуга під ключ" },
                 ].map(({ num, label }) => (
                   <div key={num} className="flex flex-col gap-0.5">
                     <span className="font-[family-name:var(--font-manrope)] text-[28px] font-extrabold leading-none text-[var(--color-accent)]">
