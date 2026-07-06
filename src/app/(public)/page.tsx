@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   const sameAs = [
-    CONTACTS.telegram,
+    CONTACTS.telegramChannel,
     CONTACTS.instagram,
     CONTACTS.youtube,
     CONTACTS.facebook,

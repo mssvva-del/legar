@@ -15,8 +15,6 @@ import {
 } from "lucide-react";
 import {
   TelegramIcon,
-  WhatsAppIcon,
-  ViberIcon,
   InstagramIcon,
   YoutubeIcon,
   FacebookIcon,
@@ -56,30 +54,12 @@ const CONTACT_CARDS = [
   },
   {
     icon: TelegramIcon,
-    title: "Telegram",
-    primary: CONTACTS.telegramHandle,
-    secondary: "Відповідь упродовж 15 хвилин",
-    href: CONTACTS.telegram,
-    cta: "Написати",
-    badge: "Швидко",
-  },
-  {
-    icon: WhatsAppIcon,
-    title: "WhatsApp",
-    primary: CONTACTS.phoneDirect,
-    secondary: "Зручний месенджер",
-    href: CONTACTS.whatsapp,
-    cta: "Написати",
-    badge: null,
-  },
-  {
-    icon: ViberIcon,
-    title: "Viber",
-    primary: CONTACTS.phoneDirect,
-    secondary: "Зручний месенджер",
-    href: CONTACTS.viber,
-    cta: "Написати",
-    badge: null,
+    title: "Telegram-канал",
+    primary: CONTACTS.telegramChannelHandle,
+    secondary: "Новини, поради, кейси LEGAR",
+    href: CONTACTS.telegramChannel,
+    cta: "Підписатися",
+    badge: "Канал",
   },
   {
     icon: Mail,
@@ -100,9 +80,7 @@ const BUSINESS_HOURS = [
 ];
 
 const MESSENGERS = [
-  { icon: TelegramIcon, label: "Telegram", handle: CONTACTS.telegramHandle, href: CONTACTS.telegram },
-  { icon: WhatsAppIcon, label: "WhatsApp", handle: CONTACTS.phoneDirect, href: CONTACTS.whatsapp },
-  { icon: ViberIcon, label: "Viber", handle: CONTACTS.phoneDirect, href: CONTACTS.viber },
+  { icon: TelegramIcon, label: "Telegram-канал", handle: CONTACTS.telegramChannelHandle, href: CONTACTS.telegramChannel },
 ];
 
 const SOCIAL = [

@@ -5,6 +5,7 @@ import {
 } from "lucide-react";
 import { SERVICES, CONTACTS, CITIES } from "@/lib/constants";
 import { ServiceFAQ } from "@/components/services/ServiceFAQ";
+import { LeadForm } from "@/components/shared/LeadForm";
 import type { Article } from "@/lib/blog-content";
 
 const ICON_MAP: Record<string, LucideIcon> = {
@@ -212,30 +213,27 @@ export function ArticleLayout({ article }: ArticleLayoutProps) {
       </section>
 
       {/* ── FINAL CTA ─────────────────────────────────────────────────────── */}
-      <section aria-labelledby="article-cta-heading" className="bg-[var(--color-accent)] py-20 md:py-24">
-        <div className="container-legar text-center">
-          <div className="mx-auto max-w-[680px]">
-            <h2
-              id="article-cta-heading"
-              className="font-[family-name:var(--font-manrope)] text-[28px] font-extrabold leading-[1.1] text-[var(--color-ink)] md:text-[40px]"
-            >
-              Маєте схожу ситуацію?
-            </h2>
-            <p className="mt-4 text-[16px] leading-relaxed text-[var(--color-ink)]/70">
-              Почніть з AI-Діагностики — за 5–10 хвилин отримаєте оцінку ситуації
-              та план дій. Або зателефонуйте на гарячу лінію.
-            </p>
-            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
-              <Link
-                href="/poslugy/ai-diagnostyka"
-                className="inline-flex h-[56px] w-full items-center justify-center gap-2 rounded-[8px] bg-[var(--color-primary)] px-8 text-[16px] font-semibold text-white shadow-sm transition-all hover:bg-[var(--color-primary-600)] hover:scale-[1.02] active:scale-[0.98] sm:w-auto"
+      <section aria-labelledby="article-cta-heading" className="bg-[var(--color-accent)] py-16 md:py-20">
+        <div className="container-legar">
+          <div className="mx-auto max-w-[720px]">
+            <div className="text-center mb-8">
+              <h2
+                id="article-cta-heading"
+                className="font-[family-name:var(--font-manrope)] text-[28px] font-extrabold leading-[1.1] text-[var(--color-ink)] md:text-[38px]"
               >
-                <Sparkles className="h-5 w-5" aria-hidden="true" />
-                Пройти AI-Діагностику
-              </Link>
+                Маєте схожу ситуацію?
+              </h2>
+              <p className="mt-3 text-[17px] leading-relaxed text-[var(--color-ink)]/75">
+                Залиште заявку — адвокат зв'яжеться протягом 15 хвилин.
+              </p>
+            </div>
+            <div className="bg-white rounded-2xl shadow-sm p-6 md:p-8">
+              <LeadForm variant="compact" source={`blog-${article.slug}`} />
+            </div>
+            <div className="mt-5 text-center">
               <a
                 href={CONTACTS.phoneTel}
-                className="inline-flex h-[56px] w-full items-center justify-center gap-2 rounded-[8px] border-2 border-[var(--color-ink)] bg-transparent px-7 text-[16px] font-semibold text-[var(--color-ink)] transition-colors hover:bg-[var(--color-ink)] hover:text-[var(--color-accent)] sm:w-auto"
+                className="inline-flex items-center gap-2 text-[15px] font-semibold text-[var(--color-ink)] transition-colors hover:text-[var(--color-primary)]"
               >
                 <Phone className="h-5 w-5" aria-hidden="true" />
                 {CONTACTS.phone}

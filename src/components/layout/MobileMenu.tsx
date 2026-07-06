@@ -144,10 +144,10 @@ export function MobileMenu({ open, onClose, onOpenSOS }: MobileMenuProps) {
         <div className="border-t border-[var(--color-bg-300)] px-4 py-6">
           <div className="mb-4 flex items-center justify-around">
             <a
-              href={CONTACTS.telegram}
+              href={CONTACTS.telegramChannel}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Telegram"
+              aria-label="Telegram-канал LEGAR"
               className="rounded-full p-3 text-[var(--color-ink)]/70 transition-colors hover:bg-[var(--color-bg-200)] hover:text-[var(--color-primary)]"
             >
               <TelegramIcon className="h-5 w-5" />

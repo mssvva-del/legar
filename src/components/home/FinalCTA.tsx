@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Sparkles, Phone } from "lucide-react";
-import { TelegramIcon } from "@/components/icons/SocialIcons";
 import { CONTACTS } from "@/lib/constants";
+import { PhoneLink } from "@/components/shared/PhoneLink";
 
 export function FinalCTA() {
   return (
@@ -30,22 +30,14 @@ export function FinalCTA() {
               <Sparkles className="h-5 w-5" aria-hidden="true" />
               Пройти AI-діагностику
             </Link>
-            <a
+            <PhoneLink
               href={CONTACTS.phoneTel}
+              source="home-final-cta"
               className="inline-flex h-[56px] w-full items-center justify-center gap-2 rounded-[8px] border-2 border-[var(--color-ink)] bg-transparent px-7 text-[16px] font-semibold text-[var(--color-ink)] transition-colors hover:bg-[var(--color-ink)] hover:text-[var(--color-accent)] sm:w-auto"
             >
               <Phone className="h-5 w-5" aria-hidden="true" />
               {CONTACTS.phone}
-            </a>
-            <a
-              href={CONTACTS.telegram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-[56px] w-full items-center justify-center gap-2 px-4 text-[16px] font-semibold text-[var(--color-ink)] underline-offset-4 transition-colors hover:underline sm:w-auto"
-            >
-              <TelegramIcon className="h-5 w-5" />
-              Написати в Telegram
-            </a>
+            </PhoneLink>
           </div>
 
           <p className="mt-8 text-[13px] text-[var(--color-ink)]/60">

@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Search, ChevronDown, Sparkles, Phone } from "lucide-react";
 import { COMPANY, CONTACTS } from "@/lib/constants";
+import { LeadForm } from "@/components/shared/LeadForm";
 
 type FaqCat =
   | "all"
@@ -315,30 +316,28 @@ export default function FaqPage() {
         }}
       />
 
-      {/* ── STILL HAVE QUESTIONS ── */}
-      <section className="bg-[var(--color-bg-200)] py-12 px-4">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-2xl font-extrabold text-[var(--color-ink)] mb-3">
-            Не знайшли відповідь?
-          </h2>
-          <p className="text-gray-600 mb-8">
-            Зателефонуйте або пройдіть AI-Діагностику — менеджер відповість на будь-яке питання впродовж 2 годин.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+      {/* ── LEAD FORM CTA ── */}
+      <section className="bg-[var(--color-accent)] py-16 px-4">
+        <div className="max-w-2xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-extrabold text-[var(--color-ink)] mb-3">
+              Не знайшли відповідь?
+            </h2>
+            <p className="text-[var(--color-ink)]/70">
+              Залиште заявку — адвокат зв'яжеться протягом 15 хвилин.
+            </p>
+          </div>
+          <div className="bg-white rounded-2xl shadow-sm p-6 md:p-8">
+            <LeadForm variant="compact" source="faq-page" />
+          </div>
+          <div className="mt-5 text-center">
             <a
               href={CONTACTS.phoneTel}
-              className="inline-flex items-center justify-center gap-2 bg-[var(--color-primary)] text-white font-bold px-8 py-4 rounded-2xl hover:opacity-90 transition-opacity"
+              className="inline-flex items-center gap-2 text-[15px] font-semibold text-[var(--color-ink)] transition-colors hover:text-[var(--color-primary)]"
             >
               <Phone size={18} />
               {CONTACTS.phone}
             </a>
-            <Link
-              href="/poslugy/ai-diagnostyka"
-              className="inline-flex items-center justify-center gap-2 bg-[var(--color-ink)] text-white font-bold px-8 py-4 rounded-2xl hover:opacity-90 transition-opacity"
-            >
-              <Sparkles size={18} />
-              AI-Діагностика — 1 200 грн
-            </Link>
           </div>
         </div>
       </section>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Phone, MessageCircle } from "lucide-react";
+import { Phone } from "lucide-react";
 import { CONTACTS } from "@/lib/constants";
 import { LeadForm } from "@/components/shared/LeadForm";
 
@@ -41,22 +41,13 @@ export function ServiceFinalCTA({ serviceName, ctaLabel, slug }: ServiceFinalCTA
           </div>
 
           {/* Альтернативні контакти */}
-          <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
+          <div className="mt-6 flex justify-center">
             <a
               href={CONTACTS.phoneTel}
-              className="inline-flex h-[48px] items-center justify-center gap-2 rounded-[8px] border-2 border-[var(--color-ink)] bg-transparent px-6 text-[15px] font-semibold text-[var(--color-ink)] transition-colors hover:bg-[var(--color-ink)] hover:text-[var(--color-accent)] w-full sm:w-auto"
+              className="inline-flex h-[48px] items-center justify-center gap-2 rounded-[8px] border-2 border-[var(--color-ink)] bg-transparent px-6 text-[15px] font-semibold text-[var(--color-ink)] transition-colors hover:bg-[var(--color-ink)] hover:text-[var(--color-accent)]"
             >
               <Phone className="h-5 w-5" aria-hidden="true" />
               {CONTACTS.phone}
-            </a>
-            <a
-              href={CONTACTS.telegram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-[48px] items-center justify-center gap-2 px-4 text-[15px] font-semibold text-[var(--color-ink)] underline-offset-4 transition-colors hover:underline w-full sm:w-auto"
-            >
-              <MessageCircle className="h-5 w-5" aria-hidden="true" />
-              Написати в Telegram
             </a>
           </div>
 

@@ -2,12 +2,11 @@ import Link from "next/link";
 import { Mail, Phone } from "lucide-react";
 import {
   TelegramIcon,
-  WhatsAppIcon,
-  ViberIcon,
   InstagramIcon,
   YoutubeIcon,
   FacebookIcon,
 } from "@/components/icons/SocialIcons";
+import { PhoneLink } from "@/components/shared/PhoneLink";
 import { Logo } from "@/components/shared/Logo";
 import {
   CONTACTS,
@@ -34,21 +33,15 @@ export function Footer() {
             </p>
 
             <div className="mt-6 flex flex-col gap-2.5">
-              <a
+              <PhoneLink
                 href={CONTACTS.phoneTel}
+                source="footer"
                 className="inline-flex items-center gap-2.5 text-[15px] font-semibold text-white transition-colors hover:text-[var(--color-accent)]"
               >
                 <Phone className="h-4 w-4" aria-hidden="true" />
                 <span className="tabular-nums">{CONTACTS.phone}</span>
                 <span className="text-[11px] text-white/45 font-normal">безкоштовно</span>
-              </a>
-              <a
-                href={CONTACTS.phoneDirectTel}
-                className="inline-flex items-center gap-2.5 text-[14px] text-white/80 transition-colors hover:text-[var(--color-accent)]"
-              >
-                <Phone className="h-4 w-4" aria-hidden="true" />
-                <span className="tabular-nums">{CONTACTS.phoneDirect}</span>
-              </a>
+              </PhoneLink>
               <a
                 href={`mailto:${CONTACTS.email}`}
                 className="inline-flex items-center gap-2.5 text-[14px] text-white/70 transition-colors hover:text-[var(--color-accent)]"
@@ -58,34 +51,12 @@ export function Footer() {
               </a>
             </div>
 
-            {/* Messengers */}
+            {/* Social + Telegram channel */}
             <div className="mt-5">
-              <p className="mb-2.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-white/40">Месенджери</p>
-              <div className="flex items-center gap-2">
-                {[
-                  { href: CONTACTS.telegram, label: "Telegram", Icon: TelegramIcon },
-                  { href: CONTACTS.whatsapp, label: "WhatsApp", Icon: WhatsAppIcon },
-                  { href: CONTACTS.viber, label: "Viber", Icon: ViberIcon },
-                ].map(({ href, label, Icon }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    target={label !== "Viber" ? "_blank" : undefined}
-                    rel={label !== "Viber" ? "noopener noreferrer" : undefined}
-                    aria-label={label}
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white/75 transition-all hover:border-[var(--color-accent)] hover:bg-[var(--color-accent)]/10 hover:text-[var(--color-accent)]"
-                  >
-                    <Icon className="h-4 w-4" />
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            {/* Social */}
-            <div className="mt-4">
               <p className="mb-2.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-white/40">Соцмережі</p>
               <div className="flex items-center gap-2">
                 {[
+                  { href: CONTACTS.telegramChannel, label: "Telegram", Icon: TelegramIcon },
                   { href: CONTACTS.instagram, label: "Instagram", Icon: InstagramIcon },
                   { href: CONTACTS.youtube, label: "YouTube", Icon: YoutubeIcon },
                   { href: CONTACTS.facebook, label: "Facebook", Icon: FacebookIcon },

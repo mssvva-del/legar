@@ -18,6 +18,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { COMPANY, CONTACTS } from "@/lib/constants";
+import { LeadForm } from "@/components/shared/LeadForm";
 
 type PriceCat = "all" | "b2c" | "b2b" | "sos" | "ai";
 
@@ -502,23 +503,21 @@ export default function PricesPage() {
           <p className="text-blue-100 mb-8">
             AI-Діагностика за 1 200 грн проаналізує вашу справу і покаже точну вартість захисту.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/poslugy/ai-diagnostyka"
-              className="inline-flex items-center justify-center gap-2 bg-[var(--color-accent)] text-[var(--color-ink)] font-bold px-8 py-4 rounded-2xl hover:opacity-90 transition-opacity"
-            >
-              <Sparkles size={18} />
-              AI-Діагностика — 1 200 грн
-            </Link>
-            <a
-              href={CONTACTS.phoneTel}
-              className="inline-flex items-center justify-center gap-2 bg-white/10 text-white font-bold px-8 py-4 rounded-2xl hover:bg-white/20 transition-colors border border-white/20"
-            >
-              <Phone size={18} />
-              {CONTACTS.phone}
-            </a>
+          <div className="mx-auto max-w-[640px] mt-8">
+            <div className="bg-white rounded-2xl shadow-sm p-6 md:p-8">
+              <LeadForm variant="compact" source="tsiny-page" />
+            </div>
+            <div className="mt-5 text-center">
+              <a
+                href={CONTACTS.phoneTel}
+                className="inline-flex items-center gap-2 text-[15px] font-semibold text-white transition-colors hover:text-[var(--color-accent)]"
+              >
+                <Phone size={18} />
+                {CONTACTS.phone}
+              </a>
+            </div>
           </div>
-          <p className="mt-6 text-sm text-blue-200">
+          <p className="mt-6 text-center text-sm text-blue-200">
             * LEGAR — інформаційно-консультаційна платформа. Юридичні послуги надають адвокати-партнери НААУ.
           </p>
         </div>
