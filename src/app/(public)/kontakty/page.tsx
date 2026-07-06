@@ -44,15 +44,6 @@ const CONTACT_CARDS = [
     badge: "24/7",
   },
   {
-    icon: Phone,
-    title: "Прямий номер",
-    primary: CONTACTS.phoneDirect,
-    secondary: "Для термінових питань",
-    href: CONTACTS.phoneDirectTel,
-    cta: "Зателефонувати",
-    badge: "SOS",
-  },
-  {
     icon: TelegramIcon,
     title: "Telegram-канал",
     primary: CONTACTS.telegramChannelHandle,

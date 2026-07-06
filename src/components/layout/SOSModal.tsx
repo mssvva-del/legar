@@ -91,14 +91,6 @@ export function SOSModal({ open, onClose, source }: SOSModalProps) {
                 </span>
                 <span className="text-[11px] font-medium text-[var(--color-ink)]/60 bg-white/60 px-2 py-0.5 rounded-full">безкоштовно</span>
               </a>
-              <a
-                href={CONTACTS.phoneDirectTel}
-                onClick={() => { trackEvent({ name: "phone_direct_clicked", source: `modal_${source}` }); onClose(); }}
-                className="inline-flex h-[52px] items-center gap-3 rounded-[12px] border border-[var(--color-bg-300)] bg-white px-5 text-[16px] font-semibold text-[var(--color-ink)] transition-colors hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
-              >
-                <Phone className="h-5 w-5" aria-hidden="true" />
-                {CONTACTS.phoneDirect}
-              </a>
             </div>
 
             {/* Messengers */}

@@ -1,7 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <rect width="64" height="64" rx="12" fill="#1B4DFF"/>
-  <path d="M32 12 L50 19 V37 c0 11 -8 19 -18 22 c-10 -3 -18 -11 -18 -22 V19 Z" fill="none" stroke="white" stroke-width="2" stroke-linejoin="round"/>
-  <text x="32" y="46" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-weight="800" font-size="30" fill="white">L</text>
-  <circle cx="44" cy="44" r="3" fill="#FFD60A"/>
+  <!-- Background -->
+  <rect width="64" height="64" rx="14" fill="#1B4DFF"/>
+
+  <!-- Shield shape (filled white, low opacity) -->
+  <path d="M32 9 L50 17 V33 Q50 50 32 57 Q14 50 14 33 V17 Z"
+        fill="white" opacity="0.15"/>
+
+  <!-- Bold L — vertical stroke -->
+  <rect x="19" y="16" width="8" height="27" rx="2" fill="white"/>
+  <!-- Bold L — horizontal stroke -->
+  <rect x="19" y="36" width="22" height="7" rx="2" fill="white"/>
+
+  <!-- Yellow accent bar -->
+  <rect x="19" y="47" width="22" height="4" rx="2" fill="#FFD60A"/>
 </svg>

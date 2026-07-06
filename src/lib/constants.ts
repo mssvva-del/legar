@@ -17,14 +17,9 @@ export const CONTACTS = {
   phone: "0 800 357 288",
   phoneFormatted: "+38 (0800) 357-288",
   phoneTel: "tel:+380800357288",
-  // Прямий номер (WhatsApp / Viber)
-  phoneDirect: "+38 068 912 73 65",
-  phoneDirectTel: "tel:+380689127365",
-  // Месенджери (підтримка)
+  // Месенджери (підтримка — тільки через форму або 0800)
   telegram: "https://t.me/legar_ukr",
   telegramHandle: "@legar_ukr",
-  whatsapp: "https://wa.me/380689127365",
-  viber: "viber://chat?number=+380689127365",
   // Канал
   telegramChannel: "https://t.me/legarukr",
   telegramChannelHandle: "@legarukr",
