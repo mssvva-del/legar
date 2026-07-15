@@ -45,7 +45,7 @@ export function MetaPixel() {
 
   return (
     <>
-      <Script id="meta-pixel-init" strategy="afterInteractive">
+      <Script id="meta-pixel-init" strategy="lazyOnload">
         {`
           !function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -71,7 +71,7 @@ export function MetaPixel() {
 
       {/* TikTok Pixel */}
       {TIKTOK_ID && (
-        <Script id="tiktok-pixel-init" strategy="afterInteractive">
+        <Script id="tiktok-pixel-init" strategy="lazyOnload">
           {`
             !function (w, d, t) {
               w.TiktokAnalyticsObject=t;
