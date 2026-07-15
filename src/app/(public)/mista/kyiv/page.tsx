@@ -50,7 +50,7 @@ export default function KyivPage() {
           name: "Військово-юридичні послуги у Києві",
           itemListElement: [
             { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI-Діагностика справи" }, price: "1200", priceCurrency: "UAH" },
-            { "@type": "Offer", itemOffered: { "@type": "Service", name: "Антиштраф ТЦК 360°" }, price: "8500", priceCurrency: "UAH" },
+            { "@type": "Offer", itemOffered: { "@type": "Service", name: "Антиштраф ТЦК 360°" }, price: "8000", priceCurrency: "UAH" },
             { "@type": "Offer", itemOffered: { "@type": "Service", name: "ВЛК Pro" }, price: "14000", priceCurrency: "UAH" },
           ],
         },

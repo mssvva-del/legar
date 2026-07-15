@@ -44,11 +44,11 @@ export default function Sos247Page() {
         },
         offers: {
           "@type": "Offer",
-          price: "800",
+          price: "1500",
           priceCurrency: "UAH",
           priceSpecification: {
             "@type": "UnitPriceSpecification",
-            price: "800",
+            price: "1500",
             priceCurrency: "UAH",
           },
           availability: "https://schema.org/InStock",

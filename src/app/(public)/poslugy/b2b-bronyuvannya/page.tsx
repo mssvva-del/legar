@@ -44,11 +44,11 @@ export default function B2bBronyuvannyaPage() {
         },
         offers: {
           "@type": "Offer",
-          price: "65000",
+          price: "50000",
           priceCurrency: "UAH",
           priceSpecification: {
             "@type": "UnitPriceSpecification",
-            price: "65000",
+            price: "50000",
             priceCurrency: "UAH",
           },
           availability: "https://schema.org/InStock",

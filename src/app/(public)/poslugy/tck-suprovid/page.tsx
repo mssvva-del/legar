@@ -44,11 +44,11 @@ export default function TckSuprovidPage() {
         },
         offers: {
           "@type": "Offer",
-          price: "4500",
+          price: "5000",
           priceCurrency: "UAH",
           priceSpecification: {
             "@type": "UnitPriceSpecification",
-            price: "4500",
+            price: "5000",
             priceCurrency: "UAH",
           },
           availability: "https://schema.org/InStock",

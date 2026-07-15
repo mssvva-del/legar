@@ -44,11 +44,11 @@ export default function AntyshtrafTck360Page() {
         },
         offers: {
           "@type": "Offer",
-          price: "8500",
+          price: "8000",
           priceCurrency: "UAH",
           priceSpecification: {
             "@type": "UnitPriceSpecification",
-            price: "8500",
+            price: "8000",
             priceCurrency: "UAH",
           },
           availability: "https://schema.org/InStock",

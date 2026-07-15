@@ -44,11 +44,11 @@ export default function SzchZahystPage() {
         },
         offers: {
           "@type": "Offer",
-          price: "28000",
+          price: "30000",
           priceCurrency: "UAH",
           priceSpecification: {
             "@type": "UnitPriceSpecification",
-            price: "28000",
+            price: "30000",
             priceCurrency: "UAH",
           },
           availability: "https://schema.org/InStock",
