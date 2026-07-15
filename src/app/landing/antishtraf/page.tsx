@@ -30,6 +30,7 @@ const TRUST_ITEMS = [
   { icon: BadgeCheck, label: "Адвокати НААУ", sub: "офіційна реєстрація" },
   { icon: Gavel, label: "від 8 000 грн", sub: "без прихованих платежів" },
   { icon: Shield, label: "Без передоплати", sub: "спочатку оцінка — потім рішення" },
+  { icon: CheckCircle2, label: "Гарантія 50%", sub: "повернемо при нашій процесуальній помилці" },
 ];
 
 const HOW_IT_WORKS = [
@@ -46,7 +47,7 @@ const HOW_IT_WORKS = [
   {
     n: "3",
     title: "Отримуєте план і ціну",
-    desc: "Чіткий план дій і фіксована вартість. Ви самі вирішуєте — продовжувати чи ні.",
+    desc: "Чіткий план дій і фіксована вартість. Якщо підстав для оскарження немає — чесно скажемо, і ви нічого не платите.",
   },
 ];
 
@@ -93,6 +94,10 @@ const FAQS = [
   {
     q: "Чи обов'язково я повинен приходити до офісу?",
     a: "Ні. Ми ведемо справи дистанційно по всій Україні. Всі документи — онлайн або поштою. Адвокат може виїхати до ТЦК замість вас.",
+  },
+  {
+    q: "Яка у вас гарантія?",
+    a: "Чесна оцінка: якщо адвокат не бачить підстав для оскарження — скаже одразу, і ви не платите нічого. Якщо справу програно через нашу процесуальну помилку — повертаємо 50% вартості послуги. Умови фіксуються в договорі.",
   },
 ];
 
@@ -175,7 +180,7 @@ export default function AntishtrafLandingPage() {
 
       {/* ── TRUST BAR ───────────────────────────────────────────────────── */}
       <section className="border-b border-[var(--color-bg-300)] bg-[var(--color-bg-200)]">
-        <div className="mx-auto grid max-w-5xl grid-cols-3 divide-x divide-[var(--color-bg-300)] px-4">
+        <div className="mx-auto grid max-w-5xl grid-cols-2 divide-x divide-[var(--color-bg-300)] px-4 sm:grid-cols-4">
           {TRUST_ITEMS.map(({ icon: Icon, label, sub }) => (
             <div key={label} className="flex flex-col items-center gap-1 py-5 text-center">
               <Icon
@@ -408,6 +413,10 @@ export default function AntishtrafLandingPage() {
               <p className="mt-4 text-[17px] leading-relaxed text-[var(--color-ink)]/75">
                 Заповніть форму — адвокат зателефонує за 15 хвилин і
                 безкоштовно оцінить шанси на скасування.
+              </p>
+              <p className="mt-3 inline-flex items-center gap-2 rounded-[8px] bg-[var(--color-ink)]/[0.06] px-3 py-2 text-[14px] font-semibold text-[var(--color-ink)]">
+                <Clock className="h-4 w-4" aria-hidden="true" />
+                На оскарження закон дає 10 днів з дня вручення — не втрачайте строк.
               </p>
               <div className="mt-6 flex items-center gap-3">
                 <a
