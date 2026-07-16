@@ -117,13 +117,13 @@ export const SERVICES: Service[] = [
     description: "Критичність + бронювання співробітників",
   },
   {
-    slug: "advokaty-sudovi",
-    title: "Адвокати — судові та досудові провадження",
-    shortTitle: "Адвокати",
-    priceUah: 200000,
-    priceLabel: "від 5 000 $",
+    slug: "viyskovyi-advokat",
+    title: "Військовий адвокат",
+    shortTitle: "Військовий адвокат",
+    priceUah: 6000,
+    priceLabel: "від 6 000 грн",
     icon: "Scale",
-    description: "Цивільні, кримінальні, адміністративні справи — досудово та в суді",
+    description: "Персональний адвокат НААУ: ТЦК, ВЛК, СЗЧ, командування, виплати",
   },
 ];
 

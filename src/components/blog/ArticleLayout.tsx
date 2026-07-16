@@ -1,6 +1,6 @@
 import Link from "next/link";
 import {
-  Sparkles, Shield, FileCheck, Users, Gavel, Phone, Building2,
+  Sparkles, Shield, FileCheck, Users, Gavel, Phone, Building2, Scale,
   ArrowRight, Clock, Calendar, CheckCircle2, type LucideIcon,
 } from "lucide-react";
 import { SERVICES, CONTACTS, CITIES } from "@/lib/constants";
@@ -9,7 +9,7 @@ import { LeadForm } from "@/components/shared/LeadForm";
 import type { Article } from "@/lib/blog-content";
 
 const ICON_MAP: Record<string, LucideIcon> = {
-  Sparkles, Shield, FileCheck, Users, Gavel, Phone, Building2,
+  Sparkles, Shield, FileCheck, Users, Gavel, Phone, Building2, Scale,
 };
 
 function formatDate(iso: string): string {

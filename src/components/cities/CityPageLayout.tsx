@@ -1,6 +1,6 @@
 import Link from "next/link";
 import {
-  Sparkles, Shield, FileCheck, Users, Gavel, Phone, Building2,
+  Sparkles, Shield, FileCheck, Users, Gavel, Phone, Building2, Scale,
   ArrowRight, CheckCircle2, Clock, MapPin, Quote, type LucideIcon,
 } from "lucide-react";
 import { SERVICES, CONTACTS, CITIES } from "@/lib/constants";
@@ -9,7 +9,7 @@ import { ServiceFAQ } from "@/components/services/ServiceFAQ";
 import type { CityContent } from "@/lib/cities-content";
 
 const ICON_MAP: Record<string, LucideIcon> = {
-  Sparkles, Shield, FileCheck, Users, Gavel, Phone, Building2,
+  Sparkles, Shield, FileCheck, Users, Gavel, Phone, Building2, Scale,
 };
 
 interface CityPageLayoutProps {
