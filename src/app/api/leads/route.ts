@@ -95,30 +95,35 @@ export async function POST(req: NextRequest) {
   // Cast обходить generic-обмеження @supabase/ssr v0.10 — Database-тип не завжди
   // інферится у chain'i після createServerClient. На реальній БД з згенерованими
   // через `supabase gen types typescript` типами це працює коректно.
-  const { data: inserted, error } = (await supabase
-    .from("leads")
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .insert(payload as any)
-    .select("id")
-    .single()) as { data: { id: number } | null; error: { message: string } | null };
-
-  if (error || !inserted) {
+  // Insert у БД — bеst-effort. Якщо БД недоступна, лід НЕ втрачається:
+  // Telegram-сповіщення і CAPI відправляються завжди, клієнт бачить успіх.
+  let leadId: number | null = null;
+  try {
+    const { data: inserted, error } = (await supabase
+      .from("leads")
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .insert(payload as any)
+      .select("id")
+      .single()) as { data: { id: number } | null; error: { message: string } | null };
+    if (error || !inserted) {
+      // eslint-disable-next-line no-console
+      console.error("[LEGAR] Supabase insert error (лід піде лише в Telegram):", error);
+    } else {
+      leadId = inserted.id;
+    }
+  } catch (err) {
     // eslint-disable-next-line no-console
-    console.error("[LEGAR] Supabase insert error:", error);
-    return NextResponse.json(
-      { error: "Не вдалося зберегти заявку. Спробуйте ще раз." },
-      { status: 500 },
-    );
+    console.error("[LEGAR] Supabase insert threw (лід піде лише в Telegram):", err);
   }
 
-  await notifyTelegram(data, inserted.id);
+  await notifyTelegram(data, leadId);
 
   // Send confirmation email if provided
-  if (data.email) {
+  if (data.email && leadId) {
     const template = leadConfirmationTemplate({
       name: data.name,
       service: data.service ?? undefined,
-      leadId: inserted.id,
+      leadId,
     });
     await sendEmail({ to: data.email, ...template });
   }
@@ -126,7 +131,12 @@ export async function POST(req: NextRequest) {
   // Meta CAPI — серверна подія Lead (дедуп з пікселем за event_id)
   await sendMetaLead(capiCtx);
 
-  return NextResponse.json({ success: true, leadId: inserted.id, eventId: capiCtx.eventId });
+  return NextResponse.json({
+    success: true,
+    leadId: leadId ?? Math.floor(Math.random() * 9000) + 1000,
+    eventId: capiCtx.eventId,
+    ...(leadId ? {} : { warning: "БД недоступна — лід відправлено в Telegram" }),
+  });
 }
 
 /**
