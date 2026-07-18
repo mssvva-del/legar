@@ -75,6 +75,18 @@ export function CookieBanner() {
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
     pushConsentToGtm(payload);
+    // Fire the PageView that was skipped at load time (pixel inits without
+    // tracking until consent) — otherwise a single-page visit sends nothing.
+    if (marketingV) {
+      const w = window as unknown as Record<string, unknown>;
+      if (typeof w.fbq === "function") {
+        (w.fbq as (...args: unknown[]) => void)("track", "PageView");
+      }
+      if (typeof w.ttq === "object" && w.ttq !== null) {
+        const t = w.ttq as { page?: () => void };
+        if (typeof t.page === "function") t.page();
+      }
+    }
     setVisible(false);
     setShowModal(false);
   }
