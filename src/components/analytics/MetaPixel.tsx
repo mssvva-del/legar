@@ -45,7 +45,7 @@ export function MetaPixel() {
 
   return (
     <>
-      <Script id="meta-pixel-init" strategy="lazyOnload">
+      <Script id="meta-pixel-init" strategy="afterInteractive">
         {`
           !function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
