@@ -372,8 +372,11 @@ export function LandingLeadForm({
 
       {/* Sub CTA */}
       <div className="flex flex-col items-center gap-1.5 text-center">
+        <p className="text-[12px] font-medium text-[var(--color-ink)]/60">
+          🔒 Конфіденційно. Захищено адвокатською таємницею — дані не передаються третім особам.
+        </p>
         <p className="text-[12px] text-[var(--color-ink)]/45">
-          🔒 Дані захищені TLS 1.3 · Конфіденційно · Відповідь за 15 хв
+          Відповідь за 15 хв · Або анонімно в Telegram
         </p>
         <p className="text-[13px] text-[var(--color-ink)]/60">
           Або пишіть у Telegram:{" "}
