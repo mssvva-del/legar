@@ -31,6 +31,10 @@ interface LandingLeadFormProps {
   formId?: string;        // для розрізнення "hero" vs "bottom"
   ctaLabel?: string;
   className?: string;
+  /** Слаг послуги, з якою зв'язати заявку (default: antyshtraf-tck-360) */
+  service?: string;
+  /** Префікс джерела у повідомленні (default: "Лендинг антиштраф") */
+  sourceLabel?: string;
 }
 
 /** Читає cookie (для _fbp / _fbc — підвищують матчинг CAPI). */
@@ -65,6 +69,8 @@ export function LandingLeadForm({
   formId = "hero",
   ctaLabel = "Отримати безкоштовну оцінку",
   className,
+  service = "antyshtraf-tck-360",
+  sourceLabel = "Лендинг антиштраф",
 }: LandingLeadFormProps) {
   const [form, setForm] = useState<FormState>({
     name: "",
@@ -107,7 +113,7 @@ export function LandingLeadForm({
     const fullMessage =
       form.message.trim().length >= 30
         ? form.message.trim()
-        : `[Лендинг антиштраф] ${form.message.trim()}`;
+        : `[${sourceLabel}] ${form.message.trim()}`;
 
     const params =
       typeof window !== "undefined"
@@ -128,7 +134,7 @@ export function LandingLeadForm({
           name: form.name.trim(),
           phone: normalizePhone(form.phone),
           city: form.city || undefined,
-          service: "antyshtraf-tck-360",
+          service,
           message: fullMessage,
           consent: true,
           utm_source: params.get("utm_source") ?? "meta",
@@ -151,7 +157,7 @@ export function LandingLeadForm({
 
       // 🔥 Pixel events (eventID — дедуп з серверним CAPI)
       fireMetaLead(eventId);
-      fireGtagLead("antyshtraf-tck-360");
+      fireGtagLead(service);
     } catch (err) {
       const msg =
         err instanceof Error ? err.message : "Сталася помилка. Спробуйте ще раз.";
