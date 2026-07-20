@@ -106,40 +106,39 @@ export function CookieBanner() {
           aria-label="Налаштування cookies"
           className="fixed inset-x-0 bottom-0 z-[60] bg-[var(--color-ink)] text-white shadow-[0_-12px_32px_rgba(10,15,31,0.3)]"
         >
-          <div className="container-legar py-5 md:py-6">
-            <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
-              <div className="flex items-start gap-3 flex-1">
-                <Cookie size={18} className="flex-shrink-0 mt-0.5 text-[var(--color-accent)]" />
-                <p className="text-sm leading-relaxed text-white/85">
-                  <span className="font-semibold text-white">Ми використовуємо cookies </span>
-                  для коректної роботи сайту, аналітики та персоналізації реклами.{" "}
+          <div className="container-legar py-3 md:py-6">
+            <div className="flex flex-col md:flex-row md:items-center gap-2.5 md:gap-6">
+              <div className="flex items-start gap-2.5 flex-1">
+                <Cookie size={16} className="flex-shrink-0 mt-0.5 text-[var(--color-accent)]" />
+                <p className="text-[13px] leading-snug text-white/80 md:text-sm md:leading-relaxed">
+                  <span className="font-semibold text-white">Ми використовуємо cookies</span> для роботи сайту та реклами.{" "}
                   <Link
                     href="/legal/cookies"
                     className="underline underline-offset-2 hover:text-[var(--color-accent)] transition-colors"
                   >
-                    Дізнатись більше
+                    Детальніше
                   </Link>
                 </p>
               </div>
-              <div className="flex flex-wrap items-center gap-2 md:flex-nowrap md:flex-shrink-0">
+              <div className="flex items-center gap-2 md:flex-nowrap md:flex-shrink-0">
                 <button
                   type="button"
                   onClick={acceptEssential}
-                  className="rounded-xl border border-white/20 px-4 py-2.5 text-sm font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+                  className="flex-1 whitespace-nowrap rounded-xl border border-white/20 px-3 py-2 text-[13px] font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white md:flex-none md:px-4 md:py-2.5 md:text-sm"
                 >
                   Лише необхідні
                 </button>
                 <button
                   type="button"
                   onClick={() => setShowModal(true)}
-                  className="rounded-xl border border-white/30 px-4 py-2.5 text-sm font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+                  className="hidden rounded-xl border border-white/30 px-4 py-2.5 text-sm font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white md:inline-flex"
                 >
                   Налаштувати
                 </button>
                 <button
                   type="button"
                   onClick={acceptAll}
-                  className="rounded-xl bg-[var(--color-accent)] px-5 py-2.5 text-sm font-bold text-[var(--color-ink)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
+                  className="flex-1 whitespace-nowrap rounded-xl bg-[var(--color-accent)] px-4 py-2 text-[13px] font-bold text-[var(--color-ink)] transition-transform hover:scale-[1.02] active:scale-[0.98] md:flex-none md:px-5 md:py-2.5 md:text-sm"
                 >
                   Прийняти все
                 </button>

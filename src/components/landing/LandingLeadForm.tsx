@@ -91,8 +91,7 @@ export function LandingLeadForm({
       e.name = "Введіть ім'я (мінімум 2 символи)";
     if (!PHONE_RE.test(normalizePhone(form.phone)))
       e.phone = "Формат: 0XXXXXXXXX або +380XXXXXXXXX";
-    if (!form.message.trim() || form.message.trim().length < 5)
-      e.message = "Опишіть ситуацію (хоча б кілька слів)";
+    // Опис ситуації — НЕобов'язковий (менше тертя на холодному трафіку).
     if (!form.consent)
       e.consent = "Необхідна згода з Політикою конфіденційності";
     return e;
@@ -109,11 +108,13 @@ export function LandingLeadForm({
     setErrors({});
     setIsSubmitting(true);
 
-    // Prepend source prefix so message always satisfies API min-30 rule
+    // Опис необов'язковий. Формуємо повідомлення так, щоб завжди пройти
+    // API-валідацію (min 30) навіть коли клієнт нічого не написав.
+    const userMsg = form.message.trim();
     const fullMessage =
-      form.message.trim().length >= 30
-        ? form.message.trim()
-        : `[${sourceLabel}] ${form.message.trim()}`;
+      userMsg.length >= 30
+        ? userMsg
+        : `[${sourceLabel}] ${userMsg || "Заявка на безкоштовну оцінку — клієнт не залишив опис."}`;
 
     const params =
       typeof window !== "undefined"
@@ -284,12 +285,12 @@ export function LandingLeadForm({
       {/* Row 3: Ситуація */}
       <div className="flex flex-col gap-1.5">
         <label htmlFor={`${formId}-message`} className="text-[13px] font-semibold text-[var(--color-ink)]">
-          Ситуація <span className="text-[var(--color-danger)]" aria-hidden="true">*</span>
+          Ситуація <span className="font-normal text-[var(--color-ink)]/45">— необов'язково</span>
         </label>
         <textarea
           id={`${formId}-message`}
-          rows={3}
-          placeholder="Отримав постанову ТЦК про штраф. Хочу дізнатись, чи можна оскаржити…"
+          rows={2}
+          placeholder="Коротко опишіть ситуацію (за бажанням)"
           value={form.message}
           onChange={(e) => setForm({ ...form, message: e.target.value })}
           className={cn(inputBase, "resize-none", errors.message ? inputErr : inputOk)}
