@@ -16,38 +16,49 @@ const SYSTEM = `Ти — помічник української юридичн�
 
 Тон: спокійний, людяний, без канцеляриту. Людина зазвичай у стресі.`;
 
+/** Anthropic, якщо є ключ; інакше Groq. Обидва — OpenAI-сумісні за формою відповіді. */
 export async function aiReply(userText: string, context?: string): Promise<string | null> {
-  const key = process.env.ANTHROPIC_API_KEY;
-  if (!key) return null;
+  const prompt = context ? `[Що вже відомо: ${context}]\n\n${userText}` : userText;
+  const anthropic = process.env.ANTHROPIC_API_KEY;
+  const groq = process.env.GROQ_API_KEY;
+
+  const cfg: {
+    url: string;
+    headers: Record<string, string>;
+    body: Record<string, unknown>;
+    pick: (d: Record<string, unknown>) => string | undefined;
+  } | null = anthropic
+    ? {
+        url: "https://api.anthropic.com/v1/messages",
+        headers: { "content-type": "application/json", "x-api-key": anthropic, "anthropic-version": "2023-06-01" },
+        body: { model: "claude-haiku-4-5-20251001", max_tokens: 400, system: SYSTEM, messages: [{ role: "user", content: prompt }] },
+        pick: (d: Record<string, unknown>) =>
+          (d.content as { type: string; text?: string }[] | undefined)?.find((c) => c.type === "text")?.text,
+      }
+    : groq
+      ? {
+          url: "https://api.groq.com/openai/v1/chat/completions",
+          headers: { "content-type": "application/json", Authorization: `Bearer ${groq}` },
+          body: { model: "llama-3.3-70b-versatile", max_tokens: 400, messages: [{ role: "system", content: SYSTEM }, { role: "user", content: prompt }] },
+          pick: (d: Record<string, unknown>) =>
+            (d.choices as { message?: { content?: string } }[] | undefined)?.[0]?.message?.content,
+        }
+      : null;
+
+  if (!cfg) return null;
 
   try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
+    const res = await fetch(cfg.url, {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "x-api-key": key,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model: "claude-haiku-4-5-20251001",
-        max_tokens: 400,
-        system: SYSTEM,
-        messages: [
-          {
-            role: "user",
-            content: context ? `[Що вже відомо: ${context}]\n\n${userText}` : userText,
-          },
-        ],
-      }),
+      headers: cfg.headers,
+      body: JSON.stringify(cfg.body),
       signal: AbortSignal.timeout(20_000),
     });
-
     if (!res.ok) {
       console.error("[LEGAR AI]", res.status, await res.text().catch(() => ""));
       return null;
     }
-    const data = (await res.json()) as { content?: { type: string; text?: string }[] };
-    return data.content?.find((c) => c.type === "text")?.text?.trim() ?? null;
+    return cfg.pick((await res.json()) as Record<string, unknown>)?.trim() ?? null;
   } catch (err) {
     console.error("[LEGAR AI]", err);
     return null;
