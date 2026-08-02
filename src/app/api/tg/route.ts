@@ -196,8 +196,8 @@ export async function POST(req: NextRequest) {
   // Телефон
   if ((d.step === "phone" || d.step === "consult_phone") && (contact || (text && /\d{7,}/.test(text)))) {
     const phone = contact?.phone_number ?? text!.replace(/[^\d+]/g, "").slice(0, 20);
+    // Сесію не переносимо: рядок став лідом. Наступне повідомлення почне новий діалог.
     await handoff(sb, chat_id, id, d, phone, contact?.first_name ?? firstName, username);
-    d.step = "chat"; await save(sb, chat_id, null, d, firstName);
     await say(chat_id,
       d.paidClaimed
         ? "Готово ✅ Менеджер підтвердить оплату і зателефонує найближчим часом."
