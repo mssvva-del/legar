@@ -16,6 +16,7 @@ interface FormState {
   name: string;
   phone: string;
   city: string;
+  intent: string;
   message: string;
   consent: boolean;
 }
@@ -23,9 +24,17 @@ interface FormState {
 interface FieldError {
   name?: string;
   phone?: string;
+  intent?: string;
   message?: string;
   consent?: string;
 }
+
+/** Два платні варіанти. Безкоштовних консультацій не пропонуємо. */
+const INTENTS = [
+  { value: "consult", label: "Консультація адвоката — 490 грн" },
+  { value: "service", label: "Вирішити питання під ключ — від 8 000 грн" },
+  { value: "price", label: "Дізнатися вартість для моєї ситуації" },
+] as const;
 
 interface LandingLeadFormProps {
   formId?: string;        // для розрізнення "hero" vs "bottom"
@@ -67,7 +76,7 @@ function fireGtagLead(service?: string) {
 
 export function LandingLeadForm({
   formId = "hero",
-  ctaLabel = "Отримати безкоштовну оцінку",
+  ctaLabel = "Отримати консультацію",
   className,
   service = "antyshtraf-tck-360",
   sourceLabel = "Лендинг антиштраф",
@@ -76,6 +85,7 @@ export function LandingLeadForm({
     name: "",
     phone: "",
     city: "",
+    intent: "",
     message: "",
     consent: false,
   });
@@ -92,6 +102,7 @@ export function LandingLeadForm({
     if (!PHONE_RE.test(normalizePhone(form.phone)))
       e.phone = "Формат: 0XXXXXXXXX або +380XXXXXXXXX";
     // Опис ситуації — НЕобов'язковий (менше тертя на холодному трафіку).
+    if (!form.intent) e.intent = "Оберіть, що вам потрібно";
     if (!form.consent)
       e.consent = "Необхідна згода з Політикою конфіденційності";
     return e;
@@ -114,7 +125,7 @@ export function LandingLeadForm({
     const fullMessage =
       userMsg.length >= 30
         ? userMsg
-        : `[${sourceLabel}] ${userMsg || "Заявка на безкоштовну оцінку — клієнт не залишив опис."}`;
+        : `[${sourceLabel}] ${INTENTS.find((i) => i.value === form.intent)?.label ?? ""}. ${userMsg || "Опис не залишено."}`;
 
     const params =
       typeof window !== "undefined"
@@ -280,6 +291,33 @@ export function LandingLeadForm({
           ))}
           <option value="Інше">Інше місто</option>
         </select>
+      </div>
+
+      {/* Row 2.5: Що потрібно (обидва варіанти платні) */}
+      <div className="flex flex-col gap-1.5">
+        <label htmlFor={`${formId}-intent`} className="text-[13px] font-semibold text-[var(--color-ink)]">
+          Що вам потрібно? <span className="text-[var(--color-danger)]" aria-hidden="true">*</span>
+        </label>
+        <select
+          id={`${formId}-intent`}
+          value={form.intent}
+          onChange={(e) => setForm({ ...form, intent: e.target.value })}
+          className={cn(inputBase, errors.intent ? inputErr : inputOk)}
+          disabled={isSubmitting}
+        >
+          <option value="">Оберіть варіант…</option>
+          {INTENTS.map((i) => (
+            <option key={i.value} value={i.value}>{i.label}</option>
+          ))}
+        </select>
+        {errors.intent && (
+          <p role="alert" className="flex items-center gap-1 text-xs text-[var(--color-danger)]">
+            <AlertCircle className="h-3.5 w-3.5" aria-hidden="true" /> {errors.intent}
+          </p>
+        )}
+        <p className="text-[12px] leading-snug text-[var(--color-ink)]/50">
+          Консультація адвоката — 490 грн, зараховується у вартість послуги. Безкоштовних консультацій не надаємо.
+        </p>
       </div>
 
       {/* Row 3: Ситуація */}

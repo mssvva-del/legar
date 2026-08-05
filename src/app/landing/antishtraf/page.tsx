@@ -14,12 +14,12 @@ const SERVICE_ICON_MAP: Record<string, LucideIcon> = {
 };
 
 export const metadata: Metadata = {
-  title: "Оскаржити штраф ТЦК — безкоштовна оцінка від адвоката | LEGAR",
+  title: "Оскаржити штраф ТЦК — консультація 490 грн від адвоката | LEGAR",
   description:
     "Отримали постанову ТЦК? Дізнайтесь за 15 хвилин, чи можна її скасувати. Адвокати НААУ. Антиштраф ТЦК 360° від 8 000 грн. Без передоплати.",
   robots: { index: false, follow: false }, // лендинг не індексується
   openGraph: {
-    title: "Оскаржити штраф ТЦК — безкоштовна оцінка",
+    title: "Оскаржити штраф ТЦК — консультація 490 грн",
     description: "Адвокати НААУ перевіряють постанову. Без передоплати.",
     url: `${COMPANY.url}/landing/antishtraf`,
     type: "website",
@@ -42,7 +42,7 @@ const HOW_IT_WORKS = [
   {
     n: "2",
     title: "Адвокат перевіряє постанову",
-    desc: "Безкоштовно аналізує процесуальні підстави для скасування.",
+    desc: "Аналізує процесуальні підстави для скасування на консультації (490 грн).",
   },
   {
     n: "3",
@@ -85,7 +85,7 @@ const FAQS = [
   },
   {
     q: "Скільки коштує послуга «Антиштраф ТЦК 360°»?",
-    a: "Від 8 000 грн — повний юридичний супровід: аналіз справи, скарга, досудовий та судовий етапи під ключ. Спочатку безкоштовна оцінка, потім — рішення.",
+    a: "Від 8 000 грн — повний юридичний супровід: аналіз справи, скарга, досудовий та судовий етапи під ключ. Спочатку консультація 490 грн, потім — рішення.",
   },
   {
     q: "Що якщо я не отримував постанову, але дізнався про штраф?",
@@ -138,7 +138,7 @@ export default function AntishtrafLandingPage() {
               </h1>
 
               <p className="mt-5 text-[17px] leading-relaxed text-white/70 md:text-[19px]">
-                Адвокати НААУ безкоштовно перевіряють постанову на процесуальні
+                Адвокати НААУ перевіряють постанову на процесуальні
                 помилки та повідомляють про шанси на оскарження — за 15 хвилин.
               </p>
 
@@ -171,7 +171,7 @@ export default function AntishtrafLandingPage() {
             <div className="w-full">
               <LandingLeadForm
                 formId="hero"
-                ctaLabel="Отримати безкоштовну оцінку"
+                ctaLabel="Отримати консультацію"
               />
             </div>
           </div>
@@ -412,7 +412,7 @@ export default function AntishtrafLandingPage() {
               </h2>
               <p className="mt-4 text-[17px] leading-relaxed text-[var(--color-ink)]/75">
                 Заповніть форму — адвокат зателефонує за 15 хвилин і
-                безкоштовно оцінить шанси на скасування.
+                оцінить шанси на скасування.
               </p>
               <p className="mt-3 inline-flex items-center gap-2 rounded-[8px] bg-[var(--color-ink)]/[0.06] px-3 py-2 text-[14px] font-semibold text-[var(--color-ink)]">
                 <Clock className="h-4 w-4" aria-hidden="true" />
@@ -440,7 +440,7 @@ export default function AntishtrafLandingPage() {
 
             <LandingLeadForm
               formId="bottom"
-              ctaLabel="Залишити заявку — безкоштовно"
+              ctaLabel="Отримати консультацію"
             />
           </div>
         </div>
