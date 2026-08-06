@@ -202,12 +202,12 @@ export function LandingLeadForm({
         <p className="mt-4 text-[14px] text-[var(--color-ink)]/50">
           Або пишіть зараз у Telegram:{" "}
           <a
-            href="https://t.me/legarukr"
+            href="https://t.me/legaraibot"
             target="_blank"
             rel="noopener noreferrer"
             className="font-semibold text-[var(--color-primary)] underline underline-offset-2"
           >
-            @legarukr
+            @legaraibot
           </a>
         </p>
       </div>
@@ -419,12 +419,12 @@ export function LandingLeadForm({
         <p className="text-[13px] text-[var(--color-ink)]/60">
           Або пишіть у Telegram:{" "}
           <a
-            href="https://t.me/legarukr"
+            href="https://t.me/legaraibot"
             target="_blank"
             rel="noopener noreferrer"
             className="font-semibold text-[var(--color-primary)]"
           >
-            @legarukr
+            @legaraibot
           </a>
         </p>
       </div>

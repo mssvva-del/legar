@@ -308,8 +308,8 @@ export default function VlkLandingPage() {
                   {CONTACTS.phone}
                 </a>
                 <span className="text-[var(--color-ink)]/30">·</span>
-                <a href="https://t.me/legarukr" target="_blank" rel="noopener noreferrer" className="text-[16px] font-semibold text-[var(--color-ink)]">
-                  @legarukr
+                <a href="https://t.me/legaraibot" target="_blank" rel="noopener noreferrer" className="text-[16px] font-semibold text-[var(--color-ink)]">
+                  @legaraibot
                 </a>
               </div>
             </div>

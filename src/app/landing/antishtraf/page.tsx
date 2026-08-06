@@ -428,12 +428,12 @@ export default function AntishtrafLandingPage() {
                 </a>
                 <span className="text-[var(--color-ink)]/30">·</span>
                 <a
-                  href="https://t.me/legarukr"
+                  href="https://t.me/legaraibot"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[16px] font-semibold text-[var(--color-ink)]"
                 >
-                  @legarukr
+                  @legaraibot
                 </a>
               </div>
             </div>
