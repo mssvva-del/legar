@@ -96,7 +96,9 @@ async function save(sb: any, chat_id: number, id: number | null, d: QuizData, na
 async function handoff(sb: any, chat_id: number, id: number | null, d: QuizData, phone: string, name?: string, username?: string) {
   const s = score(d);
   const summary = caseSummary(d);
-  const row = { phone, name: name || username || `TG ${chat_id}`, city: d.city ?? null, service: d.situation ?? null, message: `[TG ${s.label}] ${summary}`, status: "new", utm_source: "telegram", utm_medium: "bot", utm_campaign: d.source ?? "tg" };
+  // Одразу кладемо у правильну колонку дошки: обрав консультацію → consult, зібрав справу → service.
+  const stage = d.door === "consult" ? "consult" : d.door === "case" ? "service" : "new";
+  const row = { phone, name: name || username || `TG ${chat_id}`, city: d.city ?? null, service: d.situation ?? null, message: `[TG ${s.label}] ${summary}`, status: stage, utm_source: "telegram", utm_medium: "bot", utm_campaign: d.source ?? "tg" };
   if (id) await sb.from("leads").update(row).eq("id", id);
   else await sb.from("leads").insert(row);
 
