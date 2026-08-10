@@ -15,8 +15,21 @@ function authed(req: NextRequest): boolean {
 
 export async function GET(req: NextRequest) {
   if (!authed(req)) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  const type = req.nextUrl.searchParams.get("type");
   try {
     const sb = createServiceClient();
+
+    // Заявки адвокатів-партнерів — окрема таблиця
+    if (type === "applications") {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data, error } = await (sb as any)
+        .from("lawyer_applications")
+        .select("id,full_name,email,phone,city,naau_certificate,years_practice,specializations,status,created_at")
+        .order("id", { ascending: false })
+        .limit(300);
+      if (error) throw error;
+      return NextResponse.json({ applications: data ?? [] });
+    }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { data, error } = await (sb as any)
       .from("leads")
