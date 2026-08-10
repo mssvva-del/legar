@@ -47,22 +47,10 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  // Protect /admin/*
-  if (pathname.startsWith("/admin")) {
-    if (!user) {
-      return NextResponse.redirect(new URL("/login", request.url));
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: profile } = await (supabase as any)
-      .from("profiles")
-      .select("role")
-      .eq("id", user.id)
-      .single();
+  // /admin/* має власний захист паролем (див. src/app/admin/layout.tsx),
+  // тому Supabase-сесія тут не потрібна — інакше адмінка недоступна,
+  // поки не заведений користувач із роллю admin.
 
-    if (!profile || profile.role !== "admin") {
-      return NextResponse.redirect(new URL("/", request.url));
-    }
-  }
 
   return response;
 }
