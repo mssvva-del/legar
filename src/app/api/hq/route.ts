@@ -1,5 +1,7 @@
 /**
- * LEGAR HQ — вебхук асистента засновників.
+ * HQ («Штаб») — вебхук асистента групи компаній.
+ * Система над усіма бізнесами власників, а не всередині одного з них:
+ * LEGAR тут — лише одна з компаній у hq_projects.
  *
  * Приватний чат: будь-який текст → чернетка задачі.
  * Груповий чат:  тільки «/task ...» або повідомлення з «+» на початку,
@@ -8,7 +10,9 @@
 
 import { NextResponse, type NextRequest } from "next/server";
 import { parseTask } from "@/lib/hq/parse";
-import { HELP, draftCard, draftKb, taskCard, taskKb, taskList, type Ctx } from "@/lib/hq/render";
+import {
+  HELP, companyOf, draftCard, draftKb, taskCard, taskKb, taskList, taskListByCompany, type Ctx,
+} from "@/lib/hq/render";
 import {
   addAttachment, addPerson, addProject, createTask, db, doneSince, dropReminders,
   getSettings, getTask, people, projects, replaceLadder, setAliases,
@@ -227,7 +231,24 @@ async function onCommand(cmd: string, rest: string, person: Person, chatId: numb
 
     case "/all": {
       const all = (await Promise.all(c.list.map((p) => tasksOf(p.id, "assignee", sb)))).flat();
-      await send(chatId, taskList("<b>Все активные задачи</b>", all, c, true));
+      await send(chatId, taskListByCompany("<b>Все активные задачи</b>", all, c, true));
+      return true;
+    }
+
+    case "/co": {
+      const q = rest.trim().toLowerCase().replace(/^#/, "");
+      const co = c.projList.find((p) => p.key.toLowerCase() === q || p.title.toLowerCase() === q);
+      if (!co) {
+        const names = c.projList.filter((p) => !p.parent_id).map((p) => `<code>#${esc(p.key)}</code> ${esc(p.title)}`);
+        await send(chatId, names.length
+          ? `Какая компания? ${names.join(", ")}`
+          : "Компании ещё не заведены: <code>/projects hotels Отели</code>");
+        return true;
+      }
+      const ids = new Set([co.id, ...c.projList.filter((p) => p.parent_id === co.id).map((p) => p.id)]);
+      const all = (await Promise.all(c.list.map((p) => tasksOf(p.id, "assignee", sb)))).flat();
+      const list = all.filter((t) => t.project_id && ids.has(t.project_id));
+      await send(chatId, taskList(`🏢 <b>${esc(co.title)}</b>`, list, c, true));
       return true;
     }
 
@@ -235,7 +256,7 @@ async function onCommand(cmd: string, rest: string, person: Person, chatId: numb
       const all = (await Promise.all(c.list.map((p) => tasksOf(p.id, "assignee", sb)))).flat();
       const today = localDay(c.now!, c.s.tz);
       const list = all.filter((t) => t.due_at && localDay(new Date(t.due_at), c.s.tz) <= today);
-      await send(chatId, taskList("<b>Сегодня и просрочено</b>", list, c, true));
+      await send(chatId, taskListByCompany("<b>Сегодня и просрочено</b>", list, c, true));
       return true;
     }
 
@@ -253,17 +274,30 @@ async function onCommand(cmd: string, rest: string, person: Person, chatId: numb
     }
 
     case "/projects": {
+      // «/projects hotels Отели» — компания; «/projects hotels/smm SMM» — направление внутри неё.
       if (rest) {
-        if (!person.is_admin) { await send(chatId, "Проекты добавляет админ."); return true; }
-        const [key, ...title] = rest.split(" ");
-        const p = await addProject(key.toLowerCase(), title.join(" ") || key, sb);
-        await send(chatId, `Проект добавлен: <b>${esc(p.title)}</b> — тег <code>#${esc(p.key)}</code>`);
+        if (!person.is_admin) { await send(chatId, "Структуру группы меняет админ."); return true; }
+        const [path, ...title] = rest.split(" ");
+        const [a, b] = path.toLowerCase().split("/");
+        const parent = b ? c.projList.find((p) => p.key.toLowerCase() === a) : null;
+        if (b && !parent) { await send(chatId, `Компании <code>#${esc(a)}</code> нет. Сначала: <code>/projects ${esc(a)} Название</code>`); return true; }
+        const key = (b ?? a);
+        const p = await addProject(key, title.join(" ") || key, { parent_id: parent?.id ?? null }, sb);
+        await send(chatId, parent
+          ? `Направление добавлено: <b>${esc(parent.title)} · ${esc(p.title)}</b> — тег <code>#${esc(p.key)}</code>`
+          : `Компания добавлена: <b>${esc(p.title)}</b> — тег <code>#${esc(p.key)}</code>`);
         return true;
       }
-      const lines = c.projList.map((p) => `• <b>${esc(p.title)}</b> — <code>#${esc(p.key)}</code>`);
+      const roots = c.projList.filter((p) => !p.parent_id);
+      const lines = roots.map((r) => {
+        const kids = c.projList.filter((p) => p.parent_id === r.id);
+        const sub = kids.map((k) => `\n     └ ${esc(k.title)} — <code>#${esc(k.key)}</code>`).join("");
+        return `🏢 <b>${esc(r.title)}</b> — <code>#${esc(r.key)}</code>${sub}`;
+      });
       await send(chatId, lines.length
-        ? `<b>Проекты</b>\n\n${lines.join("\n")}\n\nДобавить: <code>/projects hotels Отели</code>`
-        : "Проектов пока нет. Добавить: <code>/projects hotels Отели</code>");
+        ? `<b>Группа компаний</b>\n\n${lines.join("\n")}\n\n` +
+          `Компания: <code>/projects hotels Отели</code>\nНаправление: <code>/projects hotels/smm SMM</code>`
+        : "Структура ещё пустая.\n\nКомпания: <code>/projects hotels Отели</code>\nНаправление: <code>/projects hotels/smm SMM</code>");
       return true;
     }
 
@@ -296,9 +330,19 @@ async function onCommand(cmd: string, rest: string, person: Person, chatId: numb
         const o = overdue.filter((t) => t.assignee_id === p.id).length;
         return `• ${esc(p.name)}: закрыто ${d}, просрочено сейчас ${o}`;
       });
+      // Разрез по компаниям группы — где именно скапливается.
+      const perCompany = c.projList.filter((p) => !p.parent_id).map((co) => {
+        const mine = (t: Task) => companyOf(t.project_id, c)?.id === co.id;
+        const d = done.filter(mine).length;
+        const o = overdue.filter(mine).length;
+        const a = live.filter(mine).length;
+        return d || o || a ? `• ${esc(co.title)}: активных ${a}, закрыто ${d}${o ? `, просрочено ${o}` : ""}` : "";
+      }).filter(Boolean);
+
       await send(chatId,
         `<b>Неделя</b>\n\n` +
         `Закрыто: <b>${done.length}</b>\nВ срок: <b>${pct}%</b>\nСейчас просрочено: <b>${overdue.length}</b>\nПереносились: ${moved.length}\n\n${perPerson.join("\n")}` +
+        (perCompany.length ? `\n\n<b>По компаниям</b>\n${perCompany.join("\n")}` : "") +
         (moved.length ? `\n\n<i>Задачи, которые переносят чаще двух раз, обычно поставлены не тому или не туда — стоит пересобрать, а не давить.</i>` : ""));
       return true;
     }
@@ -346,13 +390,14 @@ async function handle(u: any) {
     const code = text.startsWith("/start") ? text.split(/\s+/)[1] : undefined;
     if (BOOTSTRAP && code === BOOTSTRAP) {
       const first = (await people(sb)).length === 0;
+      const brand = (await getSettings(sb)).brand;
       person = await addPerson({
         tg_id: from.id,
         name: from.first_name || from.username || `id${from.id}`,
         username: from.username ?? null,
         is_admin: first,
       }, sb);
-      await send(chatId, `Готово, <b>${esc(person.name)}</b> — вы в системе.${first ? " Права админа выданы." : ""}\n\n${HELP}`);
+      await send(chatId, `Готово, <b>${esc(person.name)}</b> — вы в «${esc(brand)}».${first ? " Права админа выданы." : ""}\n\n${HELP}`);
       return;
     }
     if (!isGroup) {

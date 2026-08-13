@@ -99,8 +99,20 @@ function findProject(text: string, projects: Project[], cuts: Cut[]): Project | 
       return p;
     }
   }
+  // Згадка назви: беремо найконкретніший збіг — напрямок важливіший за компанію.
   const t = norm(text);
-  return projects.find((p) => p.active && t.includes(norm(p.title))) ?? null;
+  const words = t.split(/[^а-яёa-z0-9]+/).filter(Boolean);
+  const mentions = (title: string) => {
+    const n = norm(title);
+    if (n.length < 3) return false;
+    if (t.includes(n)) return true;
+    // «по отелям» → «Отели»: однослівні назви впізнаємо у будь-якому відмінку.
+    if (n.includes(" ")) return false;
+    return words.some((w) => w.length >= 4 && n.length >= 4 && w.slice(0, 4) === n.slice(0, 4) && Math.abs(w.length - n.length) <= 3);
+  };
+  const hits = projects.filter((p) => p.active && mentions(p.title));
+  hits.sort((a, b) => (b.parent_id ? 1 : 0) - (a.parent_id ? 1 : 0) || b.title.length - a.title.length);
+  return hits[0] ?? null;
 }
 
 /** Розбір дедлайну. Повертає момент у UTC або null. */

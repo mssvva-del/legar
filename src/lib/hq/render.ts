@@ -17,6 +17,22 @@ const STATUS: Record<string, string> = {
 
 export const nameOf = (id: number, c: Ctx) => c.people.get(id)?.name ?? "—";
 
+/** Компанія холдингу, до якої належить напрямок (або сам напрямок, якщо він верхній). */
+export function companyOf(projectId: number | null, c: Ctx): Project | null {
+  let p = projectId ? c.projects.get(projectId) ?? null : null;
+  for (let i = 0; i < 5 && p?.parent_id; i++) p = c.projects.get(p.parent_id) ?? null;
+  return p;
+}
+
+/** «Отели · Маркетинг» — компанія і напрямок в одному рядку. */
+export function projectPath(projectId: number | null, c: Ctx): string {
+  if (!projectId) return "";
+  const p = c.projects.get(projectId);
+  if (!p) return "";
+  const parent = p.parent_id ? c.projects.get(p.parent_id) : null;
+  return parent ? `${parent.title} · ${p.title}` : p.title;
+}
+
 /** Строка срока: «⏰ сегодня в 20:00 · через 3 ч» / «🔥 просрочено на 40 мин». */
 export function dueLine(task: Task, c: Ctx): string {
   if (!task.due_at) return "⏰ срок не задан";
@@ -29,8 +45,8 @@ export function dueLine(task: Task, c: Ctx): string {
 }
 
 export function taskCard(task: Task, c: Ctx): string {
-  const proj = task.project_id ? c.projects.get(task.project_id) : null;
-  const head = `${STATUS[task.status] ?? "•"} <b>#${task.id}</b>${proj ? ` · ${esc(proj.title)}` : ""}${task.kind === "event" ? " · 📞 событие" : ""}`;
+  const path = projectPath(task.project_id, c);
+  const head = `${STATUS[task.status] ?? "•"} <b>#${task.id}</b>${path ? ` · ${esc(path)}` : ""}${task.kind === "event" ? " · 📞 событие" : ""}`;
   const lines = [
     head,
     `<b>${esc(task.title)}</b>`,
@@ -67,14 +83,14 @@ export function taskKb(task: Task, viewer: Person) {
 
 /** Картка-чернетка: бот показує, як зрозумів, і чекає підтвердження. */
 export function draftCard(task: Task, c: Ctx, notes: string[] = []): string {
-  const proj = task.project_id ? c.projects.get(task.project_id) : null;
+  const path = projectPath(task.project_id, c);
   const lines = [
     "Так понял:",
     ``,
     `<b>${esc(task.title)}</b>`,
     `👤 исполнитель: <b>${esc(nameOf(task.assignee_id, c))}</b>`,
     `⏰ срок: <b>${task.due_at ? human(new Date(task.due_at), c.s.tz, c.now) : "не задан"}</b>`,
-    proj ? `📁 проект: ${esc(proj.title)}` : "📁 проект: —",
+    path ? `📁 ${esc(path)}` : "📁 компания: не указана",
     task.kind === "event" ? "📞 это событие — напомню за сутки, 2 часа, час и 10 минут" : "",
     task.attachments.length ? `📎 вложений: ${task.attachments.length}` : "",
     notes.length ? `\n<i>${esc(notes.join("; "))}</i>` : "",
@@ -105,13 +121,35 @@ export function taskList(title: string, tasks: Task[], c: Ctx, showAssignee = fa
   return `${title}\n\n${rows.join("\n")}`;
 }
 
+/** Те саме, але з розбивкою по компаніях групи — погляд власника холдингу. */
+export function taskListByCompany(title: string, tasks: Task[], c: Ctx, showAssignee = false): string {
+  if (!tasks.length) return `${title}\n\nПусто 🎉`;
+  const groups = new Map<string, Task[]>();
+  for (const t of tasks) {
+    const co = companyOf(t.project_id, c);
+    const key = co ? co.title : "Без компании";
+    groups.set(key, [...(groups.get(key) ?? []), t]);
+  }
+  // Одна компанія — розбивка тільки заважає.
+  if (groups.size <= 1) return taskList(title, tasks, c, showAssignee);
+  const blocks = [...groups.entries()].map(([co, list]) =>
+    taskList(`🏢 <b>${esc(co)}</b> — ${list.length}`, list, c, showAssignee));
+  return `${title}\n\n${blocks.join("\n\n")}`;
+}
+
 export const HELP = `<b>Я — ваш ассистент по задачам.</b>
 
 <b>Поставить задачу</b> — просто напишите обычным текстом:
 • <code>Серёже КП по маркетингу до 20:00</code>
 • <code>мне позвонить в банк завтра в 11:00</code>
 • <code>Вике созвон по отелям в пятницу в 15:00 #hotels</code>
-Я разберу исполнителя, срок и проект и покажу карточку на подтверждение.
+Я разберу исполнителя, срок и компанию и покажу карточку на подтверждение.
+
+<b>Структура группы</b>
+Задачи раскладываются по компаниям холдинга и направлениям внутри них:
+<code>Отели → Маркетинг</code>, <code>LEGAR → Продажи</code>. В тексте достаточно
+тега <code>#hotels</code> или упоминания названия. Сводки и статистика
+показывают разрез по компаниям — видно, где сейчас всё висит.
 
 <b>Что я делаю дальше</b>
 • напоминаю по лестнице: за сутки → за 3 часа → за час → в момент срока;
@@ -122,11 +160,12 @@ export const HELP = `<b>Я — ваш ассистент по задачам.</b
 
 <b>Команды</b>
 /my — мои задачи
-/all — все задачи обоих
+/all — все задачи обоих, по компаниям
 /today — что сегодня
+/co &lt;компания&gt; — всё по одной компании
 /task &lt;текст&gt; — поставить задачу явно
 /t &lt;id&gt; — открыть карточку задачи
-/projects — список проектов
-/stats — сводка за неделю
+/projects — структура группы компаний
+/stats — сводка за неделю по компаниям
 /me — мой Telegram ID
 /help — эта справка`;

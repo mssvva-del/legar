@@ -47,6 +47,7 @@ await api("setMyCommands", {
     { command: "my", description: "мои задачи" },
     { command: "all", description: "все задачи" },
     { command: "today", description: "что сегодня" },
+    { command: "co", description: "всё по одной компании" },
     { command: "task", description: "поставить задачу" },
     { command: "stats", description: "сводка за неделю" },
     { command: "projects", description: "проекты" },

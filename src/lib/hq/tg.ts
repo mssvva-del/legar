@@ -1,4 +1,4 @@
-/** Telegram API для HQ-бота. Окремий бот від клієнтського — інший токен. */
+/** Telegram API для HQ-бота. Окремий бот від клієнтського LEGAR — інший токен. */
 
 const TOKEN = process.env.TELEGRAM_HQ_BOT_TOKEN;
 

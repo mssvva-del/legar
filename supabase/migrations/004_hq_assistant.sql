@@ -1,4 +1,4 @@
--- LEGAR HQ — персональний асистент засновників (Telegram-бот).
+-- HQ («Штаб») — персональний асистент засновників групи компаній (Telegram-бот).
 -- Задачі, дедлайни, драбина нагадувань, ескалація, приймання роботи.
 -- RLS: доступ лише через service_role (API routes /api/hq/*).
 
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS public.hq_people (
 
 CREATE INDEX IF NOT EXISTS hq_people_tg_idx ON public.hq_people (tg_id);
 
--- ── Проєкти / напрямки бізнесу ────────────────────────────────────────────
+-- ── Компанії групи та напрямки всередині них (див. міграцію 005) ──────────
 CREATE TABLE IF NOT EXISTS public.hq_projects (
   id BIGSERIAL PRIMARY KEY,
   key TEXT NOT NULL UNIQUE,              -- 'legar', 'hotels' — для #тегів
@@ -112,4 +112,4 @@ CREATE POLICY "hq_tasks_no_anon"     ON public.hq_tasks     FOR ALL TO anon, aut
 CREATE POLICY "hq_reminders_no_anon" ON public.hq_reminders FOR ALL TO anon, authenticated USING (false) WITH CHECK (false);
 CREATE POLICY "hq_settings_no_anon"  ON public.hq_settings  FOR ALL TO anon, authenticated USING (false) WITH CHECK (false);
 
-COMMENT ON TABLE public.hq_tasks IS 'LEGAR HQ — задачі засновників. RLS: лише service_role.';
+COMMENT ON TABLE public.hq_tasks IS 'HQ — задачі засновників по всій групі компаній. RLS: лише service_role.';

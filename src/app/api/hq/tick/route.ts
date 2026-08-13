@@ -5,7 +5,7 @@
  */
 
 import { NextResponse, type NextRequest } from "next/server";
-import { taskCard, taskKb, taskList, type Ctx } from "@/lib/hq/render";
+import { taskCard, taskKb, taskList, taskListByCompany, type Ctx } from "@/lib/hq/render";
 import { acceptanceNudge, nextEscalation } from "@/lib/hq/schedule";
 import {
   addReminder, db, doneSince, dueReminders, escalationState, getSettings,
@@ -164,7 +164,7 @@ function morning(p: Person, live: Task[], c: Ctx, now: Date): string {
     parts.push(`\n📞 <b>Сегодня по времени</b>\n` + events.map((t) =>
       `• ${human(new Date(t.due_at!), c.s.tz, now).replace("сегодня в ", "")} — ${esc(t.title)}`).join("\n"));
   }
-  parts.push("\n" + taskList(`<b>Сегодня</b>`, todayList.filter((t) => t.kind !== "event"), c));
+  parts.push("\n" + taskListByCompany(`<b>Сегодня</b>`, todayList.filter((t) => t.kind !== "event"), c));
   if (overdue.length) parts.push("\n" + taskList(`🔥 <b>Просрочено</b>`, overdue, c));
   if (waiting.length) parts.push("\n" + taskList(`📤 <b>Ждёт вашей приёмки</b>`, waiting, c, true));
   if (!overdue.length && !todayList.length && !waiting.length) parts.push("\nНа сегодня ничего не висит. Хороший день, чтобы закрыть что-то из бэклога.");

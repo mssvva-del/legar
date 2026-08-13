@@ -73,16 +73,28 @@ export async function setPending(id: number, pending: Pending | null, sb = db())
 
 // ── Проєкти ───────────────────────────────────────────────────────────────
 export async function projects(sb = db()): Promise<Project[]> {
-  const { data } = await sb.from("hq_projects").select("*").eq("active", true).order("id");
+  const { data } = await sb
+    .from("hq_projects").select("*").eq("active", true)
+    .order("sort").order("id");
   return (data ?? []) as Project[];
 }
 
-export async function addProject(key: string, title: string, sb = db()): Promise<Project> {
-  const { data } = await sb
+export async function addProject(
+  key: string, title: string,
+  opts: { parent_id?: number | null; owner_id?: number | null; sort?: number } = {},
+  sb = db(),
+): Promise<Project> {
+  const { data, error } = await sb
     .from("hq_projects")
-    .upsert({ key, title, active: true }, { onConflict: "key" })
+    .upsert({
+      key, title, active: true,
+      parent_id: opts.parent_id ?? null,
+      owner_id: opts.owner_id ?? null,
+      ...(opts.sort !== undefined ? { sort: opts.sort } : {}),
+    }, { onConflict: "key" })
     .select("*")
     .single();
+  if (error) throw error;
   return data as Project;
 }
 

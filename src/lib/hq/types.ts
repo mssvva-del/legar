@@ -22,10 +22,17 @@ export type Pending =
   | { kind: "title"; task_id: number }
   | { kind: "due"; task_id: number };
 
+/**
+ * Одиниця структури холдингу.
+ * parent_id = null — компанія групи; заповнено — напрямок усередині компанії.
+ */
 export interface Project {
   id: number;
   key: string;
   title: string;
+  parent_id: number | null;
+  owner_id: number | null;
+  sort: number;
   active: boolean;
 }
 
@@ -65,6 +72,7 @@ export interface Reminder {
 }
 
 export interface Settings {
+  brand: string;
   tz: string;
   digest_morning: string;
   digest_evening: string;
@@ -76,6 +84,7 @@ export interface Settings {
 }
 
 export const DEFAULT_SETTINGS: Settings = {
+  brand: "Штаб",
   tz: "Europe/Kyiv",
   digest_morning: "08:30",
   digest_evening: "20:30",
