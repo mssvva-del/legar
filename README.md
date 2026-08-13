@@ -112,6 +112,17 @@ npm run build
 
 ---
 
+## LEGAR HQ — асистент засновників
+
+Telegram-бот для внутрішніх задач: постановка, драбина нагадувань,
+ескалація при простроченні, приймання роботи постановником, зведення двічі
+на день. Код — `src/app/api/hq/*` і `src/lib/hq/*`, міграція —
+`supabase/migrations/004_hq_assistant.sql`.
+
+Налаштування за 20 хвилин: **[docs/HQ-SETUP.md](docs/HQ-SETUP.md)**
+
+---
+
 ## Деплой
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/mssvva-del/legar)
